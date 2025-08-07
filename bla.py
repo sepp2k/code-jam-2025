@@ -1,6 +1,6 @@
 def f() -> None:
-  """Bla"""
+  """Bla."""
   pass
 def g() -> None:
-  """Blubb"""
+  """Blubb."""
   pass
