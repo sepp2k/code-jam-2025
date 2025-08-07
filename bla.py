@@ -1,4 +1,6 @@
-def f():
+def f() -> None:
+  """Bla"""
   pass
-def g():
+def g() -> None:
+  """Blubb"""
   pass
