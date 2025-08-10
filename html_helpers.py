@@ -4,7 +4,7 @@ from pyscript.web import Element
 
 def _tag(tag_name: str, *children: Element | str, **attributes: str) -> Element:
     node = document.createElement(tag_name)
-    for key, value in enumerate(attributes):
+    for key, value in attributes.items():
         node.setAttribute(key, value)
     for child in children:
         node.append(child)
