@@ -59,4 +59,10 @@ ignore = [
     "TD002",
     "TD003",
     "FIX",
+    # Insecure functions (we want to use eval)
+    "S307",
 ]
+
+[tool.pyright]
+# Pyright can't resolve the PyScript modules because they don't actually exist in the Python environment
+reportMissingImports = false
