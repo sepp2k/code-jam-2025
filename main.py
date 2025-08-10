@@ -34,5 +34,5 @@ def _main() -> None:
     )
     when("click", submit_button, handler=lambda _: _evaluate_solution(code_area.value, output_area, error_area))
 
-
 _main()
+# Issue with Git, so added this line, will remove
