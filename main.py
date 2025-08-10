@@ -32,11 +32,7 @@ def _main() -> None:
         output_area := div(),
         error_area := div(),
     )
-    when(
-        "click",
-        submit_button,
-        handler=lambda _: _evaluate_solution(code_area.value, output_area, error_area),
-    )
+    when("click", submit_button, handler=lambda _: _evaluate_solution(code_area.value, output_area, error_area))
 
 
 _main()
