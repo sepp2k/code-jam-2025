@@ -24,15 +24,8 @@ def _main() -> None:
     document.body.append(
         h1("HTML Tutorial"),
         h2("The em element"),
-        p(
-            "The <em> element can be used to emphasized parts of a text ",
-            em("like this"),
-            ".",
-        ),
-        p(
-            "Please create a paragraph (<p> tag) that contains at least two words, \
-exactly one of which is emphasized.",
-        ),
+        p("The <em> element can be used to emphasized parts of a text ", em("like this"), "."),
+        p("Please create a paragraph (<p> tag) that contains at least two words, exactly one of which is emphasized."),
         code_area := textarea(),
         br(),
         submit_button := button("Submit"),
