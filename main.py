@@ -8,7 +8,7 @@ def _evaluate_solution(source: str, output_area: Element, error_area: Element) -
     output_area.innerHTML = ""
     error_area.innerHTML = ""
     try:
-        result = eval(source, html_helpers.__dict__)
+        result = eval(source, globals=html_helpers.__dict__)
     except Exception as e:  # noqa: BLE001
         error_area.append(str(e))
         return
