@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercises</title>
+    <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+
+    <style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+nav {
+    background-color: #333;
+    color: white;
+    padding: 0.5em 1em;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1em;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main split container */
+.container {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Left section */
+.left {
+    background-color: #f4f4f4;
+    padding: 1em;
+    overflow-y: auto;
+    min-width: 150px;
+}
+
+/* Resizer bar */
+.resizer {
+    width: 5px;
+    background-color: #ccc;
+    cursor: col-resize;
+}
+
+/* Right section */
+.right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-panel, .bottom-panel {
+    flex: 1;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.top-panel {
+    padding: 1em;
+    position: relative;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    box-sizing: border-box;
+}
+.top-panel button#submit-button {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="./">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./exercises.html">Exercises</a>
+    </nav>
+
+    <div class="container">
+        <div class="left">
+            <h2>Placeholder Text</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec velit vitae massa sodales tincidunt.</p>
+            <p>More placeholder text goes here...</p>
+        </div>
+        <div class="resizer"></div>
+        <div class="right">
+            <div class="top-panel">
+                <textarea placeholder="Type here..." id="code-area"></textarea>
+                <button id="submit-button">Submit</button>
+            </div>
+            <div class="bottom-panel">
+                <div id="output-area-parent">
+                    <h2>Output: </h2>
+                    <div id="output-area"></div>
+                </div>
+                <div id="error-area"></div>
+            </div>
+        </div>
+    </div>
+    <script type="py" src="./main.py" config="./pyscript.json"></script>
+    <script>
+        const resizer = document.querySelector('.resizer');
+        const left = document.querySelector('.left');
+        const container = document.querySelector('.container');
+
+        let isResizing = false;
+
+        resizer.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            document.body.style.cursor = 'col-resize';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            let offsetRight = container.clientWidth - (e.clientX - container.offsetLeft);
+            left.style.width = (e.clientX - container.offsetLeft) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+            document.body.style.cursor = 'default';
+        });
+    </script>
+</body>
+</html>
