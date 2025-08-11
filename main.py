@@ -1,6 +1,6 @@
 import html_helpers
 from html_helpers import br, button, div, em, h1, h2, p, textarea
-from pyscript import document, when
+from pyscript import document, when, window
 from pyscript.web import Element
 
 
@@ -32,7 +32,14 @@ def _main() -> None:
         output_area := div(),
         error_area := div(),
     )
-    when("click", submit_button, handler=lambda _: _evaluate_solution(code_area.value, output_area, error_area))
+    editor = window.CodeMirror.fromTextArea(
+        code_area,
+        {
+            "lineNumbers": True,
+            "mode": "python",
+        },
+    )
+    when("click", submit_button, handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area))
 
 
 _main()
