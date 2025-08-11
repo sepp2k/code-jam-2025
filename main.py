@@ -1,14 +1,13 @@
 import html_helpers
-from html_helpers import div
-from pyscript import document, when
+from element_components import custom_nav
+from html_helpers import div, h1, p
+from pyscript import document
 from pyscript.web import Element
 
 
 def _evaluate_solution(source: str = "", output_area: Element = None, error_area: Element = None) -> None:
     if source.strip() == "" or output_area is None or error_area is None:
         print("Error, invalid inputs")
-
-    code = str(source)
 
     output_area.innerHTML = ""
     error_area.innerHTML = ""
@@ -18,12 +17,12 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
     # Attempt to generate HTML
     result = None
     try:
-        result = eval(code, globals=html_helpers.__dict__)
+        result = eval(source, globals=html_helpers.__dict__)
     except Exception:  # noqa: BLE001
         is_invalid_html = True
     finally:  # Allow support for input like a plain string (ex. "hello")
         if result is None:
-            result = str(code)
+            result = str(source)
 
     # Check if result is a valid HTML element (duck-type)
     try:
@@ -45,12 +44,39 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
 
 
 def _main() -> None:
-    code_area: Element = Element(document.querySelector("textarea#code-area"))
-    button: Element = Element(document.querySelector("button#submit-button"))
-    output_area: Element = Element(document.querySelector("div#output-area"))
-    error_area: Element = Element(document.querySelector("div#error-area"))
+    document.body.append(
+        custom_nav(),
+    )
 
-    when("click", button, handler=lambda _: _evaluate_solution(code_area.value, output_area, error_area))
+    page_name = document.querySelector("meta[name='page-name']").content
+    match page_name:
+        case "home":
+            _home_page()
+        case "about":
+            _about_page()
+        case "exercises":
+            _exercises_page()
+
+
+def _home_page() -> None:
+    document.body.append(
+        h1("Home Page"),
+        p("This is the home page."),
+    )
+
+
+def _about_page() -> None:
+    document.body.append(
+        h1("About Page"),
+        p("This is the about page."),
+    )
+
+
+def _exercises_page() -> None:
+    document.body.append(
+        h1("Exercises Page"),
+        p("This is the exercises page."),
+    )
 
 
 _main()

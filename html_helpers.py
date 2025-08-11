@@ -49,3 +49,13 @@ def textarea(*children: Element | str, **attributes: str) -> Element:
 def button(*children: Element | str, **attributes: str) -> Element:
     """Create a button."""
     return _tag("button", *children, **attributes)
+
+
+def nav(*children: Element | str, **attributes: str) -> Element:
+    """Create a nav element."""
+    return _tag("nav", *children, **attributes)
+
+
+def a(*children: Element | str, **attributes: str) -> Element:
+    """Create an anchor element."""
+    return _tag("a", *children, **attributes)
