@@ -1,5 +1,5 @@
 import html_helpers
-from html_helpers import br, button, div, em, h1, h2, p, textarea
+from html_helpers import br, button, div, h1, h2, p, textarea
 from pyscript import document, when
 from pyscript.web import Element
 
@@ -20,12 +20,11 @@ def _evaluate_solution(source: str, output_area: Element, error_area: Element) -
     # if it does not.
 
 
-def _main() -> None:
+def exercise_template() -> None:
+    """Create the exercise template for the HTML tutorial from which all exercises will be derived."""
     document.body.append(
         h1("HTML Tutorial"),
-        h2("The em element"),
-        p("The <em> element can be used to emphasized parts of a text ", em("like this"), "."),
-        p("Please create a paragraph (<p> tag) that contains at least two words, exactly one of which is emphasized."),
+        *exercise_p(),  # placeholder
         code_area := textarea(),
         br(),
         submit_button := button("Submit"),
@@ -33,6 +32,20 @@ def _main() -> None:
         error_area := div(),
     )
     when("click", submit_button, handler=lambda _: _evaluate_solution(code_area.value, output_area, error_area))
+
+
+def exercise_p() -> Element:
+    """Create the exercise content for the <p> tag."""
+    return [
+        h2("The <p> element"),
+        p("The <p> element is used to define a paragraph like this one you're reading!"),
+        p("Example: <p>This is how you use the tag.<p>"),
+        p("Create a paragraph containing whatever you want!"),
+    ]
+
+
+def _main() -> None:
+    exercise_template()
 
 
 _main()
