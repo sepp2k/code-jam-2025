@@ -11,7 +11,7 @@ authors = [
 version = "0.1.0"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["pyscript>=0.3.3"]
 
 [dependency-groups]
 # This `dev` group contains all the development requirements for our linting toolchain.
