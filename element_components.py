@@ -14,6 +14,7 @@ def custom_nav() -> Element:
         style="background-color: #333;color: white;padding: 0.5em 1em;",
     )
 
+
 def custom_button(text: str) -> Element:
     """Create a custom button element."""
     button_style = "background-color: #4CAF50; color: white; border: none; padding: 0.5em 1em; cursor: pointer;"

@@ -60,9 +60,11 @@ def a(*children: Element | str, **attributes: str) -> Element:
     """Create an anchor element."""
     return _tag("a", *children, **attributes)
 
+
 def code(*children: Element | str, **attributes: str) -> Element:
     """Create a code element."""
     return _tag("code", *children, **attributes)
+
 
 def span(*children: Element | str, **attributes: str) -> Element:
     """Create a span element."""
