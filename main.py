@@ -1,7 +1,7 @@
 import html_helpers
 from element_components import custom_nav
-from html_helpers import div, h1, p
-from pyscript import document
+from html_helpers import br, button, div, em, h1, h2, p, textarea
+from pyscript import document, when, window
 from pyscript.web import Element
 
 
@@ -77,6 +77,15 @@ def _exercises_page() -> None:
         h1("Exercises Page"),
         p("This is the exercises page."),
     )
+
+    editor = window.CodeMirror.fromTextArea(
+        code_area,
+        {
+            "lineNumbers": True,
+            "mode": "python",
+        },
+    )
+    when("click", submit_button, handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area))
 
 
 _main()
