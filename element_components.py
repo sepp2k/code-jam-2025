@@ -1,4 +1,4 @@
-from html_helpers import a, nav
+from html_helpers import a, nav, button
 from pyscript.web import Element
 
 
@@ -13,3 +13,8 @@ def custom_nav() -> Element:
         a("Exercises", href="./exercises.html", style=a_style, onmouseover=a_onmouseover, onmouseleave=a_onmouseleave),
         style="background-color: #333;color: white;padding: 0.5em 1em;",
     )
+
+def custom_button(text: str) -> Element:
+    """Create a custom button element."""
+    button_style = "background-color: #4CAF50; color: white; border: none; padding: 0.5em 1em; cursor: pointer;"
+    return button(text, style=button_style)

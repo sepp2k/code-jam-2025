@@ -1,6 +1,6 @@
 import html_helpers
-from element_components import custom_nav
-from html_helpers import br, button, div, em, h1, h2, p, textarea
+from element_components import custom_nav, custom_button
+from html_helpers import br, button, div, em, h1, h2, p, textarea, code, span
 from pyscript import document, when, window
 from pyscript.web import Element
 
@@ -20,14 +20,12 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
         result = eval(source, globals=html_helpers.__dict__)
     except Exception:  # noqa: BLE001
         is_invalid_html = True
-    finally:  # Allow support for input like a plain string (ex. "hello")
+    finally:  
         if result is None:
-            result = str(source)
+            is_invalid_html = True
 
     # Check if result is a valid HTML element (duck-type)
-    try:
-        print(result.classList)
-    except Exception:  # noqa: BLE001
+    if getattr(result, "classList", None) is None:
         is_invalid_html = True
 
     if isinstance(result, str):
@@ -74,8 +72,33 @@ def _about_page() -> None:
 
 def _exercises_page() -> None:
     document.body.append(
-        h1("Exercises Page"),
-        p("This is the exercises page."),
+        div(  
+            div(
+                h1("Exercises"),
+                h2(
+                    "Create a ", 
+                    span("paragraph", style="text-decoration:underline;"), 
+                    " tag"
+                ),
+                style="resize:horizontal;overflow:auto;min-width: 25%;max-width:75%;border-right: 1px solid #ccc; padding: 0.5em;"
+            ),
+            div(
+                div(
+                    h2("Exercise 1: Create a Custom HTML Element"),
+                    code_area := textarea(""),
+                    submit_button := custom_button("Submit"),
+                    style="border-bottom: 1px solid #ccc;padding: 0.5em;flex: 1;"
+                ),
+                div(
+                    h2("Output:"),
+                    output_area := div(style="margin-top: 1em;"),
+                    error_area := div(style="margin-top: 1em; color: red;"),
+                    style="flex: 1; overflow: auto; padding: 0.5em;"
+                ),
+                style="flex: 1;"
+            ),
+            style="display: flex; width:99vw; height: 95vh; border: 1px solid #ccc;"
+        ),
     )
 
     editor = window.CodeMirror.fromTextArea(
@@ -83,6 +106,7 @@ def _exercises_page() -> None:
         {
             "lineNumbers": True,
             "mode": "python",
+            "theme": "zenburn"
         },
     )
     when("click", submit_button, handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area))
