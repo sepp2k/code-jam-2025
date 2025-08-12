@@ -1,0 +1,178 @@
+{
+    "exerciseGroups": [
+        {
+            "title": "Learning Tags",
+            "description": "Learn about different HTML tags and their usage.",
+            "exercises": [
+                {
+                    "title": "Paragraph Tag <p>",
+                    "explanation": "The <p> element is used to define a paragraph like this one you're reading!",
+                    "example": "<p>This is how to use a tag.</p>",
+                    "description": "Create a paragraph containing whatever you want!",
+                    "answer": "<p>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the correct tag."},
+                        {"afterTries": 4, "message": "Try using the <p> tag to wrap your paragraph."},
+                        {"afterTries": 5, "message": "Remember to close the <p> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Emphasis/Italics Tag <em>",
+                    "explanation": "The <em> element is used to define emphasised text.",
+                    "example": "<p>This is <em>emphasised</em>.</p>",
+                    "description": "Create a paragraph with the word HTML emphasised.",
+                    "answer": "<p>{{*}}<em>HTML</em>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <em> tag to emphasise your text."},
+                        {"afterTries": 4, "message": "Remember to close the <em> tag properly."},
+                        {"afterTries": 5, "message": "Don't forget the <p> tags!"}
+                    ]
+                },
+                {
+                    "title": "Strong/Bold Tag <strong>",
+                    "explanation": "The <strong> element is used to bolden text.",
+                    "example": "<p>not bold - <strong>BOLD</strong></p>",
+                    "description": "Create a paragraph with at least one word bolded.",
+                    "answer": "<p>{{*}}<strong>{{*}}</strong>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <strong> tag to bolden your text."},
+                        {"afterTries": 4, "message": "Remember to close the <strong> tag properly."},
+                        {"afterTries": 5, "message": "Don't forget the <p> tags!"}
+                    ]
+                },
+                {
+                    "title": "Underline Tag <u>",
+                    "explanation": "The <u> element is used to underline text.",
+                    "example": "<p>This is <u>underlined</u></p>",
+                    "description": "Create a paragraph with everything underlined.",
+                    "answer": "<p><u>{{*}}</u></p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <u> tag to underline your text."},
+                        {"afterTries": 4, "message": "Remember to close the <u> tag properly."},
+                        {"afterTries": 5, "message": "Make sure everything is underlined"}
+                    ]
+                },
+                {
+                    "title": "Heading Tags <h1> to <h6>",
+                    "explanation": "Heading tags are used to define headings. They range from <h1> to <h6>, with <h1> being the largest.",
+                    "example": "<h1>This is the largest heading</h1><h2>This is a smaller heading</h2><h6>This is the smallest heading</h6>",
+                    "description": "Create a fourth-level heading that contains any short text of your choice.",
+                    "answer": "<h4>{{*}}</h4>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the correct tag."},
+                        {"afterTries": 4, "message": "Try using the <h4> tag for your heading."},
+                        {"afterTries": 5, "message": "Remember to close the <h4> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Highlight Tag <mark>",
+                    "explanation": "The <mark> element is used to highlight text. Fun fact: you can use CSS to change its background color!",
+                    "example": "<p>This is <mark>highlighted</mark></p>",
+                    "description": "Create a paragraph with the first word highlighted.",
+                    "answer": "<p><mark></mark>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <mark> tag to highlight your text."},
+                        {"afterTries": 4, "message": "Remember to close the <mark> tag properly."},
+                        {"afterTries": 5, "message": "Make sure the first word is highlighted"}
+                    ]
+                },
+                {
+                    "title": "Hyperlink Tag <a>",
+                    "explanation": "The <a> element is used to create hyperlinks.",
+                    "example": "<p>Visit <a href=\"https://example.com\">this link</a> for more information.</p>",
+                    "description": "Create a hyperlink <a> that points to 'https://example.com' with any visible text of your choice.",
+                    "answer": "<a href=\"https://example.com\">{{*}}</a>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the correct tag."},
+                        {"afterTries": 4, "message": "Try using the <a> tag with the href attribute."},
+                        {"afterTries": 5, "message": "Ensure the href value is 'https://example.com' and the tag is closed properly."}
+                    ]
+                },
+                {
+                    "title": "Line Break <br>",
+                    "explanation": "The <br> element is used to insert a line break.",
+                    "example": "<p>This is the first line.<br>This is the second line.</p>",
+                    "description": "Make a sentence/phrase separated by a line break.",
+                    "answer": "<p>{{*}}<br>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the <br> tag for line breaks."},
+                        {"afterTries": 4, "message": "Remember that <br> is a self-closing tag."},
+                        {"afterTries": 5, "message": "Ensure the <br> tag is placed correctly."}
+                    ]
+                },
+                {
+                    "title": "Image Tag <img>",
+                    "explanation": "The <img> element is used to embed images.",
+                    "example": "<p>Here is an image: <img src=\"image.jpg\" alt=\"Description of image\"></p>",
+                    "description": "Insert an image <img> with the source set to 'image.jpg' and alt text of your choice.",
+                    "answer": "<img src=\"image.jpg\" alt=\"{{*}}\">",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Check that you're using the correct tag for images."},
+                        {"afterTries": 4, "message": "The <img> tag needs both src and alt attributes."},
+                        {"afterTries": 5, "message": "The src should be 'image.jpg', and remember <img> is self-closing in HTML5."}
+                    ]
+                },
+                {
+                    "title": "List Tag <ul> and List Item tag <li>",
+                    "explanation": "The <ul> element is used to create unordered lists, and the <li> element is used for list items.",
+                    "example": "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>",
+                    "description": "Create an unordered list <ul> with exactly three list items <li>, each containing any text.",
+                    "answer": "<ul><li>{{*}}</li><li>{{*}}</li><li>{{*}}</li></ul>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Check that you're using the correct tags for lists."},
+                        {"afterTries": 4, "message": "An unordered list uses <ul> and <li> tags."},
+                        {"afterTries": 5, "message": "Remember to wrap all <li> elements inside <ul> and close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Table Container <table>, Table Row <tr> and Table Data <td>",
+                    "explanation": "The <table> element is used to create tables, <tr> for table rows, and <td> for table data cells.",
+                    "example": "<table><tr><td>Cell 1</td><td>Cell 2</td></tr></table>",
+                    "description": "Create a table with two rows and two cells, each containing any text.",
+                    "answer": "<table><tr><td>{{*}}</td><td>{{*}}</td></tr><tr><td>{{*}}</td><td>{{*}}</td></tr></table>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use table tags correctly."},
+                        {"afterTries": 4, "message": "Tables use <table>, <tr>, and <td> tags."},
+                        {"afterTries": 5, "message": "Close all tags in the correct order: table -> row -> cell."}
+                    ]
+                },
+                {
+                    "title": "Button Tag <button>",
+                    "explanation": "The <button> element creates a clickable button.",
+                    "example": "<button>Click Me</button>",
+                    "description": "Create a button with the text 'Submit'.",
+                    "answer": "<button>Submit</button>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the <button> tag."},
+                        {"afterTries": 4, "message": "Place the button text inside <button> and </button>."},
+                        {"afterTries": 5, "message": "Close the <button> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Span Tag <span>",
+                    "explanation": "The <span> element is an inline container used for styling or grouping text.",
+                    "example": "<p>This is a <span style=\"color: red;\">red word</span> inside a sentence.</p>",
+                    "description": "Create a paragraph with one word wrapped in a <span> and styled with red text.",
+                    "answer": "<p>{{*}}<span style=\"color: red;\">{{*}}</span>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <span> to wrap the word you want to style."},
+                        {"afterTries": 4, "message": "Apply inline CSS with style=\"color: red;\"."},
+                        {"afterTries": 5, "message": "Ensure your <span> is inside the <p> tag."}
+                    ]
+                },
+                {
+                    "title": "Division Tag <div>",
+                    "explanation": "The <div> element is a block-level container used to group other elements together, often for styling or layout purposes.",
+                    "example": "<div style=\"background-color: lightblue; padding: 10px;\">\n  <p>This is inside a div.</p>\n</div>",
+                    "description": "Create a <div> that contains a paragraph saying 'Hello World!' and has a yellow background.",
+                    "answer": "<div style=\"background-color: yellow;\"><p>Hello World!</p></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the <div> tag to create a container."},
+                        {"afterTries": 4, "message": "Apply a yellow background using style=\"background-color: yellow;\"."},
+                        {"afterTries": 5, "message": "Don't forget to put the <p> tag inside the <div>."}
+                    ]
+                }
+            ]
+        }
+    ]
+}
