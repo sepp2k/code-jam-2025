@@ -1,4 +1,4 @@
-from html_helpers import a, nav, button
+from html_helpers import a, button, nav
 from pyscript.web import Element
 
 
