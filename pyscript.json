@@ -1,3 +1,6 @@
 {
-  "files": { "html_helpers.py": "html_helpers.py" }
+  "files": {
+    "html_helpers.py": "html_helpers.py",
+    "element_components.py": "element_components.py"
+  }
 }
