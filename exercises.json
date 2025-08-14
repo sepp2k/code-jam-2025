@@ -173,6 +173,96 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "Learning Nesting",
+            "description": "Learn how to nest HTML elements inside each other.",
+            "exercises": [
+                {
+                    "title": "List with bold items",
+                    "explanation": "Nest <strong> tags inside <li> tags to bold list items.",
+                    "example": "<ul><li><strong>Item 1</strong></li><li><strong>Item 2</strong></li></ul>",
+                    "description": "Create an unordered list with two items, each item bolded.",
+                    "answer": "<ul><li><strong>{{*}}</strong></li><li><strong>{{*}}</strong></li></ul>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <strong> inside each <li>."},
+                        {"afterTries": 4, "message": "Wrap all <li> in <ul>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Image inside a link",
+                    "explanation": "Nest an <img> tag inside an <a> tag to make the image clickable.",
+                    "example": "<a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"desc\"></a>",
+                    "description": "Create a link to 'https://example.com' that contains an image with src 'image.jpg'.",
+                    "answer": "<a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"{{*}}\"></a>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <img> inside <a>."},
+                        {"afterTries": 4, "message": "Set href and src attributes correctly."},
+                        {"afterTries": 5, "message": "Close both <a> and <img> tags properly."}
+                    ]
+                },
+                {
+                    "title": "Paragraph with highlighted and bold text",
+                    "explanation": "Nest <mark> and <strong> tags inside a <p> tag.",
+                    "example": "<p>This is <mark><strong>important</strong></mark> text.</p>",
+                    "description": "Create a paragraph where one word is both highlighted and bolded.",
+                    "answer": "<p>{{*}}<mark><strong>{{*}}</strong></mark>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <strong> inside <mark> inside <p>."},
+                        {"afterTries": 4, "message": "Only one word should be both highlighted and bolded."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "List with nested spans",
+                    "explanation": "Nest <span> tags inside <li> tags to style list items.",
+                    "example": "<ul><li><span style=\"color: blue;\">Blue</span></li><li><span style=\"color: green;\">Green</span></li></ul>",
+                    "description": "Create an unordered list with two items, each item styled with a different color using <span>.",
+                    "answer": "<ul><li><span style=\"color: blue;\">{{*}}</span></li><li><span style=\"color: green;\">{{*}}</span></li></ul>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <span> inside each <li> and use different colors."},
+                        {"afterTries": 4, "message": "Wrap all <li> in <ul>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Table with nested bold cells",
+                    "explanation": "Nest <strong> tags inside <td> tags to bold table data.",
+                    "example": "<table><tr><td><strong>Cell 1</strong></td><td><strong>Cell 2</strong></td></tr></table>",
+                    "description": "Create a table with one row and two cells, each cell bolded.",
+                    "answer": "<table><tr><td><strong>{{*}}</strong></td><td><strong>{{*}}</strong></td></tr></table>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <strong> inside each <td>."},
+                        {"afterTries": 4, "message": "Wrap all <td> in <tr> and <table>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Div containing a list",
+                    "explanation": "Nest a <ul> list inside a <div> container.",
+                    "example": "<div><ul><li>Item 1</li><li>Item 2</li></ul></div>",
+                    "description": "Create a <div> that contains an unordered list with two items.",
+                    "answer": "<div><ul><li>{{*}}</li><li>{{*}}</li></ul></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <ul> inside <div>."},
+                        {"afterTries": 4, "message": "Wrap all <li> in <ul>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Paragraph with nested link and image",
+                    "explanation": "Nest an <a> tag with an <img> inside a <p> tag.",
+                    "example": "<p>See this <a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"desc\"></a></p>",
+                    "description": "Create a paragraph that contains a link to 'https://example.com' with an image inside the link.",
+                    "answer": "<p>{{*}}<a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"{{*}}\"></a>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <a> with <img> inside <p>."},
+                        {"afterTries": 4, "message": "Set href and src attributes correctly."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                }
+            ]
         }
     ]
 }
