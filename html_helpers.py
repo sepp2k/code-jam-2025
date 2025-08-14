@@ -49,3 +49,8 @@ def textarea(*children: Element | str, **attributes: str) -> Element:
 def button(*children: Element | str, **attributes: str) -> Element:
     """Create a button."""
     return _tag("button", *children, **attributes)
+
+
+def iframe(*children: Element | str, **attributes: str) -> Element:
+    """Create an iframe."""
+    return _tag("iframe", *children, **attributes)
