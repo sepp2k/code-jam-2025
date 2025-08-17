@@ -1,4 +1,5 @@
 import re
+import ast
 from string import Template
 from xml.etree import ElementTree as ET
 
@@ -72,17 +73,29 @@ def _evaluate_solution(
     is_invalid_html = False
 
     # Attempt to generate HTML
-    result = None
+    output = div()
     err = None
+    environment = {name: value for name, value in html_helpers.__dict__.items() if not name.startswith("_")}
     try:
-        result = eval(source, globals=html_helpers.__dict__)
+        tree = ast.parse(source)
+        for statement in tree.body:
+            match statement:
+                case ast.Expr():
+                    result = eval(compile(ast.Expression(statement.value), "", mode="eval"), globals=environment)
+                    if hasattr(result, "classList") or isinstance(result, str):
+                        output.append(result)
+                    else:
+                        is_invalid_html = True
+                        err = f"""
+                        Expression returned {result} (of type {type(result)}), instead of an HTML element or string
+                        """.strip()
+                case ast.FunctionDef() | ast.Assign():
+                    exec(compile(ast.Module([statement]), "", mode="exec"), globals=environment)
     except Exception as e:
-        print(f"Exception occurred: {e}")
         is_invalid_html = True
         err = e
 
-    if is_invalid_html or result is None or result == "":
-        print("Invalid HTML")
+    if is_invalid_html:
         error_area.append(div("The code did not produce valid HTML element.", br(), b("Error"), f": {err!s}"))
         _update_iframe(output_area, "")
         return

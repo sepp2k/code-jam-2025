@@ -59,7 +59,8 @@ ignore = [
     "TD002",
     "TD003",
     "FIX",
-    # Insecure functions (we want to use eval)
+    # Insecure functions (we want to use eval and exec)
+    "S102",
     "S307",
     "SIM108", # Don't force ternary
     "S314", # Don't force defusedxml parse
