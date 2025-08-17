@@ -80,6 +80,7 @@ def b(*children: Element | str, **attributes: str) -> Element:
     """Create a bold element."""
     return _tag("b", *children, **attributes)
 
+
 def img(*children: Element | str, **attributes: str) -> Element:
     """Create an image element."""
     return _tag("img", *children, **attributes)

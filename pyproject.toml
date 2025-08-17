@@ -61,7 +61,12 @@ ignore = [
     "FIX",
     # Insecure functions (we want to use eval)
     "S307",
-    "SIM108" # Don't force ternary
+    "SIM108", # Don't force ternary
+    "S314", # Don't force defusedxml parse
+    "BLE001", # Don't enforce "no catchall"
+    "PLR0911", # too many return
+    "PLR0912",  # too many branches
+    "C901",  # too complex (?? wtf why is this a thing)
 ]
 
 [tool.pyright]

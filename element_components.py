@@ -1,4 +1,4 @@
-from html_helpers import a, button, nav, img, div
+from html_helpers import a, button, div, img, nav
 from pyscript.web import Element
 
 
@@ -12,8 +12,14 @@ def custom_nav() -> Element:
             a(img(src="/assets/icon.png", alt="Logo", style="width: 3em"), href="/index.html"),
             a("Home", href="/index.html", style=a_style, onmouseover=a_onmouseover, onmouseleave=a_onmouseleave),
             a("About", href="/about.html", style=a_style, onmouseover=a_onmouseover, onmouseleave=a_onmouseleave),
-            a("Exercises", href="/exercises.html", style=a_style, onmouseover=a_onmouseover, onmouseleave=a_onmouseleave),
-            style="display: flex; align-items: center; justify-items: center; gap: 1em;"
+            a(
+                "Exercises",
+                href="/exercises.html",
+                style=a_style,
+                onmouseover=a_onmouseover,
+                onmouseleave=a_onmouseleave,
+            ),
+            style="display: flex; align-items: center; justify-items: center; gap: 1em;",
         ),
         style="background-color: #333;color: white;padding: 0.5em 1em;",
     )
