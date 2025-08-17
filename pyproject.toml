@@ -68,6 +68,7 @@ ignore = [
     "PLR0911", # too many return
     "PLR0912",  # too many branches
     "C901",  # too complex (?? wtf why is this a thing)
+    "TRY300", # don't require else block
 ]
 
 [tool.pyright]

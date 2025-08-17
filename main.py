@@ -1,5 +1,5 @@
 import ast
-import re
+from dataclasses import dataclass
 from string import Template
 from xml.etree import ElementTree as ET
 
@@ -8,6 +8,29 @@ from element_components import custom_button, custom_nav
 from html_helpers import _tag, b, br, div, h1, h2, iframe, p, span, textarea
 from pyscript import document, when, window
 from pyscript.web import Element
+
+
+@dataclass
+class XPathValidator:
+    """XPath expression validator."""
+
+    xpath: str  # XPath expression to check
+    count: int | None = None  # Expected number of occurrences
+    message: str | None = None  # Error message if validation fails
+
+    def validate(self, xml: str) -> bool:
+        """Validate the XPath expression against the provided XML."""
+        try:
+            tree = ET.ElementTree(ET.fromstring(xml))
+            elements = tree.findall(self.xpath)
+            if self.count is not None and len(elements) != self.count:
+                self.message = f"Expected {self.count} elements, found {len(elements)}."
+                return False
+            return True
+        except ET.ParseError as e:
+            self.message = f"Invalid XML: {e}"
+            return False
+
 
 IFRAME_TEMPLATE: str = """<html>
     <head>
@@ -39,10 +62,10 @@ def _update_iframe(frame: Element, content: str | Element) -> None:
 def _display_result(output_area: Element, result: Element) -> None:
     """Display the result in the output area.
 
-    :param output_area: The output area to display the result in
-    :type output_area: Element
-    :param result: The HTML to display
-    :type result: Element
+    Args:
+        output_area (Element): The element to update with the result.
+        result (Element): The result to display.
+
     """
     if isinstance(result, str) or hasattr(result, "getHTML"):
         result_html = result
@@ -100,94 +123,32 @@ def _evaluate_solution(
         _update_iframe(output_area, "")
         return
 
-    matched, msg = _matches_expected({"answer": "{{*}}", "validators": []}, result)
+    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected a paragraph element")], output)
     info_area.append(msg)
 
-    _display_result(output_area, result)
+    _display_result(output_area, output)
 
 
-def _matches_expected(expected: dict, actual: str | object) -> tuple[bool, str | Element]:
-    """Validate HTML output against expected pattern and validators."""
+def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[bool, str | Element]:
+    """Validate HTML output against expected XPath validators."""
     # Normalize actual HTML
     if hasattr(actual, "outerHTML"):
         actual_html = actual.outerHTML
     else:
         actual_html = str(actual).strip()
 
-    # --- 1) Wildcard pattern check ---
-    expected_answer = expected.get("answer", "")
-    answer_pattern = re.escape(expected_answer).replace(r"\{\{\*\}\}", ".*?")
-    if not re.fullmatch(answer_pattern, actual_html, re.DOTALL):
-        msg = div("Not quite right")
-        return False, msg
-
-    # --- 2) Parse for validators ---
-    try:
-        wrapped_html = f"<root>{actual_html}</root>"  # single root for parsing
-        tree = ET.fromstring(wrapped_html)
-    except Exception as e:
-        msg = div(f"Error parsing HTML: {e}", style="color:red; font-weight:bold;")
-        return False, msg
-
-    for validator in expected.get("validators", []):
-        xpath_expr = validator.get("xpath")
-        error_msg = validator.get("error", "Validation failed.")
-        expected_count = validator.get("count")  # optional exact count
-
-        try:
-            matches = tree.findall(xpath_expr)
-        except Exception:
-            msg = div(f"Unsupported XPath in validator: {xpath_expr}", style="color:red; font-weight:bold;")
+    # Run validators
+    for validator in expected:
+        if not isinstance(validator, XPathValidator):
+            msg = div(f"Invalid validator object: {validator}", style="color:red; font-weight:bold;")
             return False, msg
 
-        if expected_count is not None:
-            if len(matches) != expected_count:
-                msg = div(
-                    f"{error_msg} Expected exactly {expected_count}, found {len(matches)}.",
-                    style="color:red; font-weight:bold;",
-                )
-                return False, msg
-        elif not matches:
-            msg = div(error_msg, style="color:red; font-weight:bold;")
+        if not validator.validate(actual_html):
+            msg = div(
+                validator.message or "Validation failed.",
+                style="color:red; font-weight:bold;",
+            )
             return False, msg
-
-    # --- 3) Style enforcement ---
-    def parse_style(style_str: str) -> dict:
-        """Parse style string into dict using last occurrence of each key."""
-        style_dict = {}
-        for part in style_str.split(";"):
-            if ":" in part:
-                key, value = part.split(":", 1)
-                style_dict[key.strip()] = value.strip()  # last occurrence wins
-        return style_dict
-
-    style_match = re.search(r'style="([^"]*)"', expected_answer)
-    expected_style = style_match.group(1) if style_match else None
-
-    if expected_style:
-        # Extract actual style attribute
-        tag_match = re.match(r"<(\w+)([^>]*)>", actual_html)
-        if tag_match:
-            actual_attrs = tag_match.group(2)
-            actual_style_match = re.search(r'style="([^"]*)"', actual_attrs)
-            actual_style = actual_style_match.group(1) if actual_style_match else ""
-        else:
-            actual_style = ""
-
-        expected_style_dict = parse_style(expected_style)
-        actual_style_dict = parse_style(actual_style)
-
-        # Compare each expected key against the final value in actual
-        for key, val in expected_style_dict.items():
-            if key not in actual_style_dict:
-                msg = div(f"Missing expected style '{key}: {val}'.", style="color:red; font-weight:bold;")
-                return False, msg
-            if actual_style_dict[key] != val:
-                msg = div(
-                    f"Style mismatch for '{key}': expected '{val}', found '{actual_style_dict[key]}'.",
-                    style="color:red; font-weight:bold;",
-                )
-                return False, msg
 
     return True, div("Output matches ✅", style="color:green; font-weight:bold;")
 
