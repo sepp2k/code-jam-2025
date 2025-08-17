@@ -1,8 +1,8 @@
 from string import Template
 
 import html_helpers
-from html_helpers import br, button, div, em, h1, h2, iframe, p, textarea, _tag, span
 from element_components import custom_button, custom_nav
+from html_helpers import _tag, b, br, div, h1, h2, iframe, p, span, textarea
 from pyscript import document, when, window
 from pyscript.web import Element
 
@@ -37,8 +37,15 @@ def _display_result(output_area: Element, result: Element) -> None:
     :param result: The HTML to display
     :type result: Element
     """
-    result_html = result.getHTML()
+    if isinstance(result, str):
+        result_html = result
+    elif hasattr(result, "getHTML"):
+        result_html = result.getHTML()
+    else:
+        result_html = str(result)
+
     _update_iframe(output_area, result_html)
+
 
 def _evaluate_solution(source: str = "", output_area: Element = None, error_area: Element = None) -> None:
     if output_area is None or error_area is None:
@@ -58,20 +65,22 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
     try:
         result = eval(source, globals=html_helpers.__dict__)
     except Exception as e:  # noqa: BLE001
+        print(f"Exception occurred: {e}")
         is_invalid_html = True
         err = e
 
-    if is_invalid_html:
-        error_area.append(div("The code did not produce valid HTML element.", br(), str(err)))
+    if is_invalid_html or result is None or result == "":
+        print("Invalid HTML")
+        error_area.append(div("The code did not produce valid HTML element.", br(), b("Error"), f": {err!s}"))
+        _update_iframe(output_area, "")
         return
 
     # TODO: Before displaying the result we should check that the code actually produced an HTML element and display
     # a user-readable error message instead of crashing if it did not.
-#    _display_result(output_area, result)
-    # TODO: Here we should check whether the given HTML fits the required structure and produce an error message
-    # if it does not.
+    _display_result(output_area, result)
 
- #   output_area.append(div(result))
+
+#   output_area.append(div(result))
 
 
 def _main() -> None:
@@ -136,9 +145,9 @@ border-right: 1px solid #ccc; padding: 0.5em;
                 ),
                 div(
                     h2("Output:"),
-                    output_area := div(style="margin-top: 1em;"),
-                    error_area := div(style="margin-top: 1em; color: red;"),
-                    style="flex: 1; overflow: auto; padding: 0.5em;",
+                    error_area := div(style="color: red;"),
+                    output_area := iframe(style="border: none;"),
+                    style="flex: 1; padding: 0.5em; height:50%;",
                 ),
                 style="flex: 1;",
             ),
