@@ -1,0 +1,460 @@
+{
+    "exerciseGroups": [
+        {
+            "title": "Learning Tags",
+            "description": "Learn about different HTML tags and their usage.",
+            "exercises": [
+                {
+                    "title": "Paragraph Tag <p>",
+                    "explanation": "The <p> element is used to define a paragraph like this one you're reading!",
+                    "example": "<p>This is how to use a tag.</p>",
+                    "description": "Create a paragraph containing whatever you want!",
+                    "answer": "<p>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the correct tag."},
+                        {"afterTries": 4, "message": "Try using the <p> tag to wrap your paragraph."},
+                        {"afterTries": 5, "message": "Remember to close the <p> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Emphasis/Italics Tag <em>",
+                    "explanation": "The <em> element is used to define emphasised text.",
+                    "example": "<p>This is <em>emphasised</em>.</p>",
+                    "description": "Create a paragraph with the word HTML emphasised.",
+                    "answer": "<p>{{*}}<em>HTML</em>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <em> tag to emphasise your text."},
+                        {"afterTries": 4, "message": "Remember to close the <em> tag properly."},
+                        {"afterTries": 5, "message": "Don't forget the <p> tags!"}
+                    ]
+                },
+                {
+                    "title": "Strong/Bold Tag <strong>",
+                    "explanation": "The <strong> element is used to bolden text.",
+                    "example": "<p>not bold - <strong>BOLD</strong></p>",
+                    "description": "Create a paragraph with at least one word bolded.",
+                    "answer": "<p>{{*}}<strong>{{*}}</strong>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <strong> tag to bolden your text."},
+                        {"afterTries": 4, "message": "Remember to close the <strong> tag properly."},
+                        {"afterTries": 5, "message": "Don't forget the <p> tags!"}
+                    ]
+                },
+                {
+                    "title": "Underline Tag <u>",
+                    "explanation": "The <u> element is used to underline text.",
+                    "example": "<p>This is <u>underlined</u></p>",
+                    "description": "Create a paragraph with everything underlined.",
+                    "answer": "<p><u>{{*}}</u></p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <u> tag to underline your text."},
+                        {"afterTries": 4, "message": "Remember to close the <u> tag properly."},
+                        {"afterTries": 5, "message": "Make sure everything is underlined"}
+                    ]
+                },
+                {
+                    "title": "Heading Tags <h1> to <h6>",
+                    "explanation": "Heading tags are used to define headings. They range from <h1> to <h6>, with <h1> being the largest.",
+                    "example": "<h1>This is the largest heading</h1><h2>This is a smaller heading</h2><h6>This is the smallest heading</h6>",
+                    "description": "Create a fourth-level heading that contains any short text of your choice.",
+                    "answer": "<h4>{{*}}</h4>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the correct tag."},
+                        {"afterTries": 4, "message": "Try using the <h4> tag for your heading."},
+                        {"afterTries": 5, "message": "Remember to close the <h4> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Highlight Tag <mark>",
+                    "explanation": "The <mark> element is used to highlight text. Fun fact: you can use CSS to change its background color!",
+                    "example": "<p>This is <mark>highlighted</mark></p>",
+                    "description": "Create a paragraph with the first word highlighted.",
+                    "answer": "<p><mark></mark>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Try using the <mark> tag to highlight your text."},
+                        {"afterTries": 4, "message": "Remember to close the <mark> tag properly."},
+                        {"afterTries": 5, "message": "Make sure the first word is highlighted"}
+                    ]
+                },
+                {
+                    "title": "Hyperlink Tag <a>",
+                    "explanation": "The <a> element is used to create hyperlinks.",
+                    "example": "<p>Visit <a href=\"https://example.com\">this link</a> for more information.</p>",
+                    "description": "Create a hyperlink <a> that points to 'https://example.com' with any visible text of your choice.",
+                    "answer": "<a href=\"https://example.com\">{{*}}</a>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the correct tag."},
+                        {"afterTries": 4, "message": "Try using the <a> tag with the href attribute."},
+                        {"afterTries": 5, "message": "Ensure the href value is 'https://example.com' and the tag is closed properly."}
+                    ]
+                },
+                {
+                    "title": "Line Break <br>",
+                    "explanation": "The <br> element is used to insert a line break.",
+                    "example": "<p>This is the first line.<br>This is the second line.</p>",
+                    "description": "Make a sentence/phrase separated by a line break.",
+                    "answer": "<p>{{*}}<br>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the <br> tag for line breaks."},
+                        {"afterTries": 4, "message": "Remember that <br> is a self-closing tag."},
+                        {"afterTries": 5, "message": "Ensure the <br> tag is placed correctly."}
+                    ]
+                },
+                {
+                    "title": "Image Tag <img>",
+                    "explanation": "The <img> element is used to embed images.",
+                    "example": "<p>Here is an image: <img src=\"image.jpg\" alt=\"Description of image\"></p>",
+                    "description": "Insert an image <img> with the source set to 'image.jpg' and alt text of your choice.",
+                    "answer": "<img src=\"image.jpg\" alt=\"{{*}}\">",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Check that you're using the correct tag for images."},
+                        {"afterTries": 4, "message": "The <img> tag needs both src and alt attributes."},
+                        {"afterTries": 5, "message": "The src should be 'image.jpg', and remember <img> is self-closing in HTML5."}
+                    ]
+                },
+                {
+                    "title": "List Tag <ul> and List Item tag <li>",
+                    "explanation": "The <ul> element is used to create unordered lists, and the <li> element is used for list items.",
+                    "example": "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>",
+                    "description": "Create an unordered list <ul> with exactly three list items <li>, each containing any text.",
+                    "answer": "<ul><li>{{*}}</li><li>{{*}}</li><li>{{*}}</li></ul>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Check that you're using the correct tags for lists."},
+                        {"afterTries": 4, "message": "An unordered list uses <ul> and <li> tags."},
+                        {"afterTries": 5, "message": "Remember to wrap all <li> elements inside <ul> and close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Table Container <table>, Table Row <tr> and Table Data <td>",
+                    "explanation": "The <table> element is used to create tables, <tr> for table rows, and <td> for table data cells.",
+                    "example": "<table><tr><td>Cell 1</td><td>Cell 2</td></tr></table>",
+                    "description": "Create a table with two rows and two cells, each containing any text.",
+                    "answer": "<table><tr><td>{{*}}</td><td>{{*}}</td></tr><tr><td>{{*}}</td><td>{{*}}</td></tr></table>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use table tags correctly."},
+                        {"afterTries": 4, "message": "Tables use <table>, <tr>, and <td> tags."},
+                        {"afterTries": 5, "message": "Close all tags in the correct order: table -> row -> cell."}
+                    ]
+                },
+                {
+                    "title": "Button Tag <button>",
+                    "explanation": "The <button> element creates a clickable button.",
+                    "example": "<button>Click Me</button>",
+                    "description": "Create a button with the text 'Submit'.",
+                    "answer": "<button>Submit</button>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the <button> tag."},
+                        {"afterTries": 4, "message": "Place the button text inside <button> and </button>."},
+                        {"afterTries": 5, "message": "Close the <button> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Span Tag <span>",
+                    "explanation": "The <span> element is an inline container used for grouping text.",
+                    "example": "<p>This is a <span>word</span> inside a sentence.</p>",
+                    "description": "Create a paragraph with one word wrapped in a <span> tag.",
+                    "answer": "<p>{{*}}<span>{{*}}</span>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <span> to wrap the word you want to group."},
+                        {"afterTries": 4, "message": "Ensure your <span> is inside the <p> tag."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Division Tag <div>",
+                    "explanation": "The <div> element is a block-level container used to group other elements together.",
+                    "example": "<div><p>This is inside a div.</p></div>",
+                    "description": "Create a <div> that contains a paragraph saying 'Hello World!'.",
+                    "answer": "<div><p>Hello World!</p></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the <div> tag to create a container."},
+                        {"afterTries": 4, "message": "Put the <p> tag inside the <div>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Learning Nesting",
+            "description": "Learn how to nest HTML elements inside each other.",
+            "exercises": [
+                {
+                    "title": "List with bold items",
+                    "explanation": "Nest <strong> tags inside <li> tags to bold list items.",
+                    "example": "<ul><li><strong>Item 1</strong></li><li><strong>Item 2</strong></li></ul>",
+                    "description": "Create an unordered list with two items, each item bolded.",
+                    "answer": "<ul><li><strong>{{*}}</strong></li><li><strong>{{*}}</strong></li></ul>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <strong> inside each <li>."},
+                        {"afterTries": 4, "message": "Wrap all <li> in <ul>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Image inside a link",
+                    "explanation": "Nest an <img> tag inside an <a> tag to make the image clickable.",
+                    "example": "<a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"desc\"></a>",
+                    "description": "Create a link to 'https://example.com' that contains an image with src 'image.jpg'.",
+                    "answer": "<a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"{{*}}\"></a>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <img> inside <a>."},
+                        {"afterTries": 4, "message": "Set href and src attributes correctly."},
+                        {"afterTries": 5, "message": "Close both <a> and <img> tags properly."}
+                    ]
+                },
+                {
+                    "title": "Paragraph with highlighted and bold text",
+                    "explanation": "Nest <mark> and <strong> tags inside a <p> tag.",
+                    "example": "<p>This is <mark><strong>important</strong></mark> text.</p>",
+                    "description": "Create a paragraph where one word is both highlighted and bolded.",
+                    "answer": "<p>{{*}}<mark><strong>{{*}}</strong></mark>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <strong> inside <mark> inside <p>."},
+                        {"afterTries": 4, "message": "Only one word should be both highlighted and bolded."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "List with nested spans",
+                    "explanation": "Nest <span> tags inside <li> tags to style list items.",
+                    "example": "<ul><li><span style=\"color: blue;\">Blue</span></li><li><span style=\"color: green;\">Green</span></li></ul>",
+                    "description": "Create an unordered list with two items, each item styled with a different color using <span>.",
+                    "answer": "<ul><li><span style=\"color: blue;\">{{*}}</span></li><li><span style=\"color: green;\">{{*}}</span></li></ul>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <span> inside each <li> and use different colors."},
+                        {"afterTries": 4, "message": "Wrap all <li> in <ul>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Table with nested bold cells",
+                    "explanation": "Nest <strong> tags inside <td> tags to bold table data.",
+                    "example": "<table><tr><td><strong>Cell 1</strong></td><td><strong>Cell 2</strong></td></tr></table>",
+                    "description": "Create a table with one row and two cells, each cell bolded.",
+                    "answer": "<table><tr><td><strong>{{*}}</strong></td><td><strong>{{*}}</strong></td></tr></table>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <strong> inside each <td>."},
+                        {"afterTries": 4, "message": "Wrap all <td> in <tr> and <table>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Div containing a list",
+                    "explanation": "Nest a <ul> list inside a <div> container.",
+                    "example": "<div><ul><li>Item 1</li><li>Item 2</li></ul></div>",
+                    "description": "Create a <div> that contains an unordered list with two items.",
+                    "answer": "<div><ul><li>{{*}}</li><li>{{*}}</li></ul></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <ul> inside <div>."},
+                        {"afterTries": 4, "message": "Wrap all <li> in <ul>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Paragraph with nested link and image",
+                    "explanation": "Nest an <a> tag with an <img> inside a <p> tag.",
+                    "example": "<p>See this <a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"desc\"></a></p>",
+                    "description": "Create a paragraph that contains a link to 'https://example.com' with an image inside the link.",
+                    "answer": "<p>{{*}}<a href=\"https://example.com\"><img src=\"image.jpg\" alt=\"{{*}}\"></a>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Nest <a> with <img> inside <p>."},
+                        {"afterTries": 4, "message": "Set href and src attributes correctly."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Learning Colours and Styling",
+            "description": "Learn how to style HTML elements using attributes and CSS.",
+            "exercises": [
+                {
+                    "title": "Styling Span Tags",
+                    "explanation": "The <span> element can be styled using the style attribute.",
+                    "example": "<p>This is a <span style=\"color: red;\">red word</span> inside a sentence.</p>",
+                    "description": "Create a paragraph with the word 'blue' in a <span> and styled with red text.",
+                    "answer": "<p>{{*}}<span style=\"color: red;\">blue</span>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <span> to wrap the word you want to style."},
+                        {"afterTries": 4, "message": "Apply inline CSS with style=\"color: red;\"."},
+                        {"afterTries": 5, "message": "Ensure your <span> is inside the <p> tag."}
+                    ]
+                },
+                {
+                    "title": "Styling Division Tags",
+                    "explanation": "The <div> element can be styled using the style attribute.",
+                    "example": "<div style=\"background-color: lightblue; padding: 10px;\">\n  <p>This is inside a div.</p>\n</div>",
+                    "description": "Create a <div> that contains a paragraph saying 'Hello World!' and has a yellow background.",
+                    "answer": "<div style=\"background-color: yellow;\"><p>Hello World!</p></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the <div> tag to create a container."},
+                        {"afterTries": 4, "message": "Apply a yellow background using style=\"background-color: yellow;\"."},
+                        {"afterTries": 5, "message": "Don't forget to put the <p> tag inside the <div>."}
+                    ]
+                },
+                {
+                    "title": "Styled Paragraph <p>",
+                    "explanation": "The <p> element can be styled using the style attribute for text alignment and color.",
+                    "example": "<p style=\"text-align: right; color: purple;\">Right purple text</p>",
+                    "description": "Create a paragraph with any text, styled to be centered and purple.",
+                    "answer": "<p style=\"text-align: center; color: purple;\">{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set text alignment and color."},
+                        {"afterTries": 4, "message": "Make sure the text is centered and purple."},
+                        {"afterTries": 5, "message": "Close the <p> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styled Link <a>",
+                    "explanation": "The <a> element can be styled using the style attribute.",
+                    "example": "<a href=\"https://example.com\" style=\"color: red; text-decoration: underline;\">Visit Example</a>",
+                    "description": "Create a link to 'https://example.com' with any text, styled orange and both underlined and overlined.",
+                    "answer": "<a href=\"https://example.com\" style=\"color: orange; text-decoration: underline overline;\">{{*}}</a>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set color and underline."},
+                        {"afterTries": 4, "message": "Make sure the link is orange and underlined."},
+                        {"afterTries": 5, "message": "Close the <a> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styled Image <img>",
+                    "explanation": "The <img> element can be styled using the style attribute for width and border.",
+                    "example": "<img src=\"image.jpg\" alt=\"desc\" style=\"width: 100px; border: 2px solid black;\">",
+                    "description": "Insert an image with src 'answer.jpg', styled to be 150px wide with a 2px blue border.",
+                    "answer": "<img src=\"answer.jpg\" alt=\"{{*}}\" style=\"width: 150px; border: 2px solid blue;\">",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set width and border."},
+                        {"afterTries": 4, "message": "Make sure the image is 150px wide with a black border."},
+                        {"afterTries": 5, "message": "Close the <img> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Multiple Styles on One Element",
+                    "explanation": "You can combine multiple CSS properties in the style attribute.",
+                    "example": "<p style=\"color: blue; font-weight: bold; text-align: right;\">Styled text</p>",
+                    "description": "Create a paragraph with any text, styled blue, bold, and right-aligned.",
+                    "answer": "<p style=\"color: blue; font-weight: bold; text-align: right;\">{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use multiple style properties: color, font-weight, text-align."},
+                        {"afterTries": 4, "message": "Make sure the text is blue, bold, and right-aligned."},
+                        {"afterTries": 5, "message": "Close the <p> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styling with Classes",
+                    "explanation": "You can use the class attribute to apply styles achieved using other tags.",
+                    "example": "<div class=\"highlight\">This is highlighted</div>",
+                    "description": "Create a <div> with the class 'highlight' and any text inside.",
+                    "answer": "<div class=\"highlight\">{{*}}</div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the class attribute to set the class name."},
+                        {"afterTries": 4, "message": "Make sure the class is 'highlight'."},
+                        {"afterTries": 5, "message": "Close the <div> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styling Nested Elements",
+                    "explanation": "You can style nested elements differently using the style attribute.",
+                    "example": "<div style=\"background: red;\"><p style=\"color: blue;\">Green text on pink</p></div>",
+                    "description": "Create a <div> with a pink background containing a paragraph with green text.",
+                    "answer": "<div style=\"background: pink;\"><p style=\"color: green;\">{{*}}</p></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Style the <div> and <p> separately."},
+                        {"afterTries": 4, "message": "Make sure the background is pink and the text is green."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Styling Table Borders",
+                    "explanation": "You can style table borders using the style attribute on the <table> element.",
+                    "example": "<table style=\"border: 2px solid black;\"><tr><td>Cell</td></tr></table>",
+                    "description": "Create a table with any content, styled with a 4px thick blue dashed border.",
+                    "answer": "<table style=\"border: 4px dashed blue;\">{{*}}</table>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set the border on <table>."},
+                        {"afterTries": 4, "message": "Make sure the border is dashed and blue."},
+                        {"afterTries": 5, "message": "Close the <table> tag properly."}
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Learning Layout",
+            "description": "Learn how to structure and arrange content using HTML layout tags and CSS layout techniques.",
+            "exercises": [
+                {
+                    "title": "Basic Page Structure with <header>, <main>, <footer>",
+                    "explanation": "The <header>, <main>, and <footer> tags are semantic containers used to structure a webpage into top, middle, and bottom sections.",
+                    "example": "<header>Site Header</header><main>Main Content</main><footer>Site Footer</footer>",
+                    "description": "Create a page with a header, a main content area, and a footer. Put any text inside each tag.",
+                    "answer": "<header>{{*}}</header><main>{{*}}</main><footer>{{*}}</footer>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use <header>, <main>, and <footer>."},
+                        {"afterTries": 4, "message": "Each section should have some text inside it."},
+                        {"afterTries": 5, "message": "Don't forget to close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Navigation with <nav>",
+                    "explanation": "The <nav> element is used to define navigation menus. It usually contains a list of links.",
+                    "example": "<nav><a href=\"#\">Home</a> | <a href=\"#\">About</a></nav>",
+                    "description": "Create a navigation bar with two links of your choice inside a <nav> tag.",
+                    "answer": "<nav><a href=\"{{*}}\">{{*}}</a> <a href=\"{{*}}\">{{*}}</a></nav>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the <nav> tag."},
+                        {"afterTries": 4, "message": "Add at least two <a> links inside <nav>."},
+                        {"afterTries": 5, "message": "Close the <nav> and <a> tags properly."}
+                    ]
+                },
+                {
+                    "title": "Sidebar with <aside>",
+                    "explanation": "The <aside> element is used for content that is related but separate from the main content, such as a sidebar.",
+                    "example": "<main>Article</main><aside>Sidebar</aside>",
+                    "description": "Create a main content section and a sidebar using <main> and <aside> tags.",
+                    "answer": "<main>{{*}}</main><aside>{{*}}</aside>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to include both <main> and <aside>."},
+                        {"afterTries": 4, "message": "Put different text inside each tag."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Two-Column Layout with Flexbox",
+                    "explanation": "Flexbox allows you to arrange elements in rows or columns easily.",
+                    "example": "<div style=\"display:flex;\"><div>Hello</div><div>There</div></div>",
+                    "description": "Create a flexbox container with two child <div>s: The left with the text 'Left' and the right with 'Right'.",
+                    "answer": "<div style=\"display:flex;\"><div>Left</div><div>Right</div></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <div style='display:flex;'> to make a flex container."},
+                        {"afterTries": 4, "message": "Add two child <div> elements inside the container."},
+                        {"afterTries": 5, "message": "Put 'Left' and 'Right' in the two divs."}
+                    ]
+                },
+                {
+                    "title": "Grid Layout with <div>",
+                    "explanation": "CSS Grid provides a way to create layouts. Use display: grid and grid-template-columns to define a grid.",
+                    "example": "<div style=\"display:grid; grid-template-columns: 1fr 1fr 1fr;\"><div>First</div><div>Second</div><div>Third</div></div>",
+                    "description": "Create a 3-column grid with three child <div>s containing the numbers 1, 2, and 3.",
+                    "answer": "<div style=\"display:grid; grid-template-columns: 1fr 1fr 1fr;\"><div>1</div><div>2</div><div>3</div></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <div style='display:grid;'> to make a grid container."},
+                        {"afterTries": 4, "message": "Set grid-template-columns: 1fr 1fr 1fr;."},
+                        {"afterTries": 5, "message": "Add three <div> children with 1, 2, 3 inside."}
+                    ]
+                },
+                {
+                    "title": "Sticky Header with CSS Positioning",
+                    "explanation": "The position property can be used to fix elements in place. Sticky headers stay at the top while scrolling.",
+                    "example": "<header style=\"position:sticky; top:0; background:lightgray;\">Sticky Header</header>",
+                    "description": "Create a <header> that sticks to the top using CSS position: sticky.",
+                    "answer": "<header style=\"position:sticky; top:0;\">{{*}}</header>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use position:sticky and top:0 in the style attribute."},
+                        {"afterTries": 4, "message": "Wrap your content in a <header> tag."},
+                        {"afterTries": 5, "message": "Don’t forget to close <header>."}
+                    ]
+                }
+            ]
+        }
+    ]
+}
