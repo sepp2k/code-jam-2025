@@ -23,9 +23,7 @@ class XPathValidator:
         try:
             tree = ET.ElementTree(ET.fromstring(xml))
             elements = tree.findall(self.xpath)
-            if self.count is not None and len(elements) != self.count:
-                return False
-            return True
+            return self.count is not None and len(elements) != self.count
         except ET.ParseError as e:
             self.message = f"Invalid XML: {e}"
             return False
