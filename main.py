@@ -1,5 +1,5 @@
-import re
 import ast
+import re
 from string import Template
 from xml.etree import ElementTree as ET
 
