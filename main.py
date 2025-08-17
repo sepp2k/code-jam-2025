@@ -1,11 +1,33 @@
 import ast
+from dataclasses import dataclass
 from string import Template
+from xml.etree import ElementTree as ET
 
 import html_helpers
 from element_components import custom_button, custom_nav
 from html_helpers import _tag, b, br, div, h1, h2, iframe, p, span, textarea
 from pyscript import document, when, window
 from pyscript.web import Element
+
+
+@dataclass
+class XPathValidator:
+    """XPath expression validator."""
+
+    xpath: str  # XPath expression to check
+    count: int | None = None  # Expected number of occurrences
+    message: str | None = None  # Error message if validation fails
+
+    def validate(self, xml: str) -> bool:
+        """Validate the XPath expression against the provided XML."""
+        try:
+            tree = ET.ElementTree(ET.fromstring(xml))
+            elements = tree.findall(self.xpath)
+            return self.count is not None and len(elements) != self.count
+        except ET.ParseError as e:
+            self.message = f"Invalid XML: {e}"
+            return False
+
 
 IFRAME_TEMPLATE: str = """<html>
     <head>
@@ -28,8 +50,7 @@ def _update_iframe(frame: Element, content: str | Element) -> None:
         content (str | Element): The HTML content to display in the iframe's body.
 
     """
-    if hasattr(content, "getHTML"):
-        content = content.outerHTML
+    content = content.outerHTML
     iframe_contents = Template(IFRAME_TEMPLATE).safe_substitute(RESULT=content)
     frame.setAttribute("srcdoc", iframe_contents)
 
@@ -37,10 +58,10 @@ def _update_iframe(frame: Element, content: str | Element) -> None:
 def _display_result(output_area: Element, result: Element) -> None:
     """Display the result in the output area.
 
-    :param output_area: The output area to display the result in
-    :type output_area: Element
-    :param result: The HTML to display
-    :type result: Element
+    Args:
+        output_area (Element): The element to update with the result.
+        result (Element): The result to display.
+
     """
     if isinstance(result, str) or hasattr(result, "getHTML"):
         result_html = result
@@ -50,15 +71,23 @@ def _display_result(output_area: Element, result: Element) -> None:
     _update_iframe(output_area, result_html)
 
 
-def _evaluate_solution(source: str = "", output_area: Element = None, error_area: Element = None) -> None:
-    if output_area is None or error_area is None:
+def _evaluate_solution(
+    source: str = "",
+    output_area: Element = None,
+    error_area: Element = None,
+    info_area: Element = None,
+) -> None:
+    if output_area is None or error_area is None or info_area is None:
         print("Error, invalid inputs")
+        return
+
     if source.strip() == "":
         error_area.append(div("Please enter some code to evaluate.", style="color: initial;"))
         return
 
     output_area.innerHTML = ""
     error_area.innerHTML = ""
+    info_area.innerHTML = ""
 
     is_invalid_html = False
 
@@ -81,7 +110,7 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
                         """.strip()
                 case ast.FunctionDef() | ast.Assign():
                     exec(compile(ast.Module([statement]), "", mode="exec"), globals=environment)
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         is_invalid_html = True
         err = e
 
@@ -90,7 +119,30 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
         _update_iframe(output_area, "")
         return
 
+    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected 2 paragraph elements")], output)
+    info_area.append(msg)
+
     _display_result(output_area, output)
+
+
+def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[bool, str | Element]:
+    """Validate HTML output against expected XPath validators."""
+    # Normalize actual HTML
+    if hasattr(actual, "outerHTML"):
+        actual_html = actual.outerHTML
+    else:
+        actual_html = str(actual).strip()
+
+    # Run validators
+    for validator in expected:
+        if not validator.validate(actual_html):
+            msg = div(
+                validator.message or "Validation failed.",
+                style="color:red; font-weight:bold;",
+            )
+            return False, msg
+
+    return True, div("Output matches ✅", style="color:green; font-weight:bold;")
 
 
 def _main() -> None:
@@ -156,13 +208,14 @@ border-right: 1px solid #ccc; padding: 0.5em;
                 ),
                 div(
                     h2("Output:"),
+                    info_area := div(),
                     error_area := div(style="color: red;"),
-                    output_area := iframe(style="border: none; width: 95%; height: 90%;"),
+                    output_area := iframe(style="border: none; width: 95%; height: 85%;"),
                     style="flex: 1; padding: 0.5em; height:50%;",
                 ),
                 style="flex: 1;",
             ),
-            style="display: flex; width:99vw; height: 95vh; border: 1px solid #ccc;",
+            style="display: flex; width:99vw; height: 90vh; border: 1px solid #ccc;",
         ),
     )
 
@@ -173,12 +226,16 @@ border-right: 1px solid #ccc; padding: 0.5em;
             "mode": "python",
             "theme": "zenburn",
             "extraKeys": {
-                "Ctrl-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area),
-                "Cmd-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area),
+                "Ctrl-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
+                "Cmd-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
             },
         },
     )
-    when("click", submit_button, handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area))
+    when(
+        "click",
+        submit_button,
+        handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
+    )
 
 
 _main()

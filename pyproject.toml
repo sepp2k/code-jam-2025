@@ -62,8 +62,10 @@ ignore = [
     # Insecure functions (we want to use eval and exec)
     "S102",
     "S307",
-    # Don't force ternary
-    "SIM108",
+    "SIM108", # Don't force ternary
+    "S314", # Don't force defusedxml parse
+    "BLE001", # Don't enforce "no catchall"
+    "TRY300", # don't require else block
 ]
 
 [tool.pyright]
