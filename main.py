@@ -20,10 +20,10 @@ IFRAME_TEMPLATE: str = """<html>
 def _update_iframe(frame: Element, content: str) -> None:
     """Update the contents of a given iframe.
 
-    :param frame: an iframe element
-    :type frame: Element
-    :param content: the HTML content to display in the iframe's body
-    :type content: str
+    Args:
+        frame (Element): an iframe element
+        content (str): the HTML content to display in the iframe's body
+
     """
     iframe_contents = Template(IFRAME_TEMPLATE).safe_substitute(RESULT=content)
     frame.setAttribute("srcdoc", iframe_contents)
@@ -32,10 +32,10 @@ def _update_iframe(frame: Element, content: str) -> None:
 def _display_result(output_area: Element, result: Element) -> None:
     """Display the result in the output area.
 
-    :param output_area: The output area to display the result in
-    :type output_area: Element
-    :param result: The HTML to display
-    :type result: Element
+    Args:
+        output_area (Element): The output area to display the result in
+        result (Element): The HTML to display
+
     """
     if isinstance(result, str):
         result_html = result
@@ -61,13 +61,20 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
 
     # Attempt to generate HTML
     result = None
+    results = None
     err = None
     try:
-        result = eval(source, globals=html_helpers.__dict__)
+        if "\n" in source and len(source.split("\n")) > 1:
+            results = [eval(line, globals=html_helpers.__dict__) for line in source.split("\n")]
+        else:
+            result = eval(source, globals=html_helpers.__dict__)
     except Exception as e:  # noqa: BLE001
         print(f"Exception occurred: {e}")
         is_invalid_html = True
         err = e
+
+    if results:
+        result = div(*results)
 
     if is_invalid_html or result is None or result == "":
         print("Invalid HTML")
