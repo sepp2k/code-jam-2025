@@ -265,7 +265,7 @@
             ]
         },
         {
-            "title": "Learning Styling",
+            "title": "Learning Colours and Styling",
             "description": "Learn how to style HTML elements using attributes and CSS.",
             "exercises": [
                 {
@@ -374,6 +374,84 @@
                         {"afterTries": 3, "message": "Use the style attribute to set the border on <table>."},
                         {"afterTries": 4, "message": "Make sure the border is dashed and blue."},
                         {"afterTries": 5, "message": "Close the <table> tag properly."}
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Learning Layout",
+            "description": "Learn how to structure and arrange content using HTML layout tags and CSS layout techniques.",
+            "exercises": [
+                {
+                    "title": "Basic Page Structure with <header>, <main>, <footer>",
+                    "explanation": "The <header>, <main>, and <footer> tags are semantic containers used to structure a webpage into top, middle, and bottom sections.",
+                    "example": "<header>Site Header</header><main>Main Content</main><footer>Site Footer</footer>",
+                    "description": "Create a page with a header, a main content area, and a footer. Put any text inside each tag.",
+                    "answer": "<header>{{*}}</header><main>{{*}}</main><footer>{{*}}</footer>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use <header>, <main>, and <footer>."},
+                        {"afterTries": 4, "message": "Each section should have some text inside it."},
+                        {"afterTries": 5, "message": "Don't forget to close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Navigation with <nav>",
+                    "explanation": "The <nav> element is used to define navigation menus. It usually contains a list of links.",
+                    "example": "<nav><a href=\"#\">Home</a> | <a href=\"#\">About</a></nav>",
+                    "description": "Create a navigation bar with two links of your choice inside a <nav> tag.",
+                    "answer": "<nav><a href=\"{{*}}\">{{*}}</a> <a href=\"{{*}}\">{{*}}</a></nav>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to use the <nav> tag."},
+                        {"afterTries": 4, "message": "Add at least two <a> links inside <nav>."},
+                        {"afterTries": 5, "message": "Close the <nav> and <a> tags properly."}
+                    ]
+                },
+                {
+                    "title": "Sidebar with <aside>",
+                    "explanation": "The <aside> element is used for content that is related but separate from the main content, such as a sidebar.",
+                    "example": "<main>Article</main><aside>Sidebar</aside>",
+                    "description": "Create a main content section and a sidebar using <main> and <aside> tags.",
+                    "answer": "<main>{{*}}</main><aside>{{*}}</aside>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Make sure to include both <main> and <aside>."},
+                        {"afterTries": 4, "message": "Put different text inside each tag."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Two-Column Layout with Flexbox",
+                    "explanation": "Flexbox allows you to arrange elements in rows or columns easily.",
+                    "example": "<div style=\"display:flex;\"><div>Hello</div><div>There</div></div>",
+                    "description": "Create a flexbox container with two child <div>s: The left with the text 'Left' and the right with 'Right'.",
+                    "answer": "<div style=\"display:flex;\"><div>Left</div><div>Right</div></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <div style='display:flex;'> to make a flex container."},
+                        {"afterTries": 4, "message": "Add two child <div> elements inside the container."},
+                        {"afterTries": 5, "message": "Put 'Left' and 'Right' in the two divs."}
+                    ]
+                },
+                {
+                    "title": "Grid Layout with <div>",
+                    "explanation": "CSS Grid provides a way to create layouts. Use display: grid and grid-template-columns to define a grid.",
+                    "example": "<div style=\"display:grid; grid-template-columns: 1fr 1fr 1fr;\"><div>First</div><div>Second</div><div>Third</div></div>",
+                    "description": "Create a 3-column grid with three child <div>s containing the numbers 1, 2, and 3.",
+                    "answer": "<div style=\"display:grid; grid-template-columns: 1fr 1fr 1fr;\"><div>1</div><div>2</div><div>3</div></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <div style='display:grid;'> to make a grid container."},
+                        {"afterTries": 4, "message": "Set grid-template-columns: 1fr 1fr 1fr;."},
+                        {"afterTries": 5, "message": "Add three <div> children with 1, 2, 3 inside."}
+                    ]
+                },
+                {
+                    "title": "Sticky Header with CSS Positioning",
+                    "explanation": "The position property can be used to fix elements in place. Sticky headers stay at the top while scrolling.",
+                    "example": "<header style=\"position:sticky; top:0; background:lightgray;\">Sticky Header</header>",
+                    "description": "Create a <header> that sticks to the top using CSS position: sticky.",
+                    "answer": "<header style=\"position:sticky; top:0;\">{{*}}</header>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use position:sticky and top:0 in the style attribute."},
+                        {"afterTries": 4, "message": "Wrap your content in a <header> tag."},
+                        {"afterTries": 5, "message": "Don’t forget to close <header>."}
                     ]
                 }
             ]
