@@ -24,7 +24,6 @@ class XPathValidator:
             tree = ET.ElementTree(ET.fromstring(xml))
             elements = tree.findall(self.xpath)
             if self.count is not None and len(elements) != self.count:
-                self.message = f"Expected {self.count} elements, found {len(elements)}."
                 return False
             return True
         except ET.ParseError as e:
@@ -53,8 +52,7 @@ def _update_iframe(frame: Element, content: str | Element) -> None:
         content (str | Element): The HTML content to display in the iframe's body.
 
     """
-    if hasattr(content, "getHTML"):
-        content = content.outerHTML
+    content = content.outerHTML
     iframe_contents = Template(IFRAME_TEMPLATE).safe_substitute(RESULT=content)
     frame.setAttribute("srcdoc", iframe_contents)
 
@@ -123,7 +121,7 @@ def _evaluate_solution(
         _update_iframe(output_area, "")
         return
 
-    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected a paragraph element")], output)
+    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected 2 paragraph elements")], output)
     info_area.append(msg)
 
     _display_result(output_area, output)
@@ -139,10 +137,6 @@ def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[
 
     # Run validators
     for validator in expected:
-        if not isinstance(validator, XPathValidator):
-            msg = div(f"Invalid validator object: {validator}", style="color:red; font-weight:bold;")
-            return False, msg
-
         if not validator.validate(actual_html):
             msg = div(
                 validator.message or "Validation failed.",

@@ -65,9 +65,6 @@ ignore = [
     "SIM108", # Don't force ternary
     "S314", # Don't force defusedxml parse
     "BLE001", # Don't enforce "no catchall"
-    "PLR0911", # too many return
-    "PLR0912",  # too many branches
-    "C901",  # too complex (?? wtf why is this a thing)
     "TRY300", # don't require else block
 ]
 
