@@ -1,10 +1,10 @@
+
 import ast
 from dataclasses import dataclass
 from string import Template
 from xml.etree import ElementTree as ET
 
 import html_helpers
-
 from element_components import custom_button, custom_nav
 from html_helpers import _tag, b, br, div, h1, h2, iframe, p, span, textarea
 from pyscript import document, when, window
@@ -145,6 +145,7 @@ def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[
 
     return True, div("Output matches ✅", style="color:green; font-weight:bold;")
 
+
 def _main() -> None:
     document.head.append(
         _tag(
@@ -236,20 +237,6 @@ border-right: 1px solid #ccc; padding: 0.5em;
         submit_button,
         handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
     )
-
-
-def exercise_p() -> Element:
-    """Create the exercise content for the <p> tag."""
-    return [
-        h2("The <p> element"),
-        p("The <p> element is used to define a paragraph like this one you're reading!"),
-        p("Example: <p>This is how you use the tag.<p>"),
-        p("Create a paragraph containing whatever you want!"),
-    ]
-
-
-def _main() -> None:
-    exercise_template()
 
 
 _main()
