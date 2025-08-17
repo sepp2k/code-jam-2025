@@ -80,7 +80,6 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
     _display_result(output_area, result)
 
 
-
 def _main() -> None:
     document.head.append(
         _tag(
