@@ -11,23 +11,25 @@ IFRAME_TEMPLATE: str = """<html>
         <title>HTML Tutorial</title>
     </head>
     <body>
+        <div id="result">
         ${RESULT}
+        </div>
     </body>
 </html>
 """
 
 
-def _update_iframe(frame: Element, content: str) -> None:
+def _update_iframe(frame: Element, content) -> None:
     """Update the contents of a given iframe.
 
-    :param frame: an iframe element
-    :type frame: Element
-    :param content: the HTML content to display in the iframe's body
-    :type content: str
+    Args:
+        frame (Element): The iframe element to update.
+        content (str | Element): The HTML content to display in the iframe's body.
     """
+    if hasattr(content, "getHTML"):
+        content = content.outerHTML
     iframe_contents = Template(IFRAME_TEMPLATE).safe_substitute(RESULT=content)
     frame.setAttribute("srcdoc", iframe_contents)
-
 
 def _display_result(output_area: Element, result: Element) -> None:
     """Display the result in the output area.
@@ -40,7 +42,7 @@ def _display_result(output_area: Element, result: Element) -> None:
     if isinstance(result, str):
         result_html = result
     elif hasattr(result, "getHTML"):
-        result_html = result.getHTML()
+        result_html = result
     else:
         result_html = str(result)
 
@@ -138,12 +140,13 @@ border-right: 1px solid #ccc; padding: 0.5em;
                     h2("Exercise 1: Create a Custom HTML Element"),
                     code_area := textarea(""),
                     submit_button := custom_button("Submit"),
+                    span("Or press Ctrl/Cmd+Enter", style="margin-left: 1em; color: #aaa"),
                     style="border-bottom: 1px solid #ccc;padding: 0.5em;flex: 1;",
                 ),
                 div(
                     h2("Output:"),
                     error_area := div(style="color: red;"),
-                    output_area := iframe(style="border: none;"),
+                    output_area := iframe(style="border: none; width: 95%; height: 90%;"),
                     style="flex: 1; padding: 0.5em; height:50%;",
                 ),
                 style="flex: 1;",
@@ -158,6 +161,10 @@ border-right: 1px solid #ccc; padding: 0.5em;
             "lineNumbers": True,
             "mode": "python",
             "theme": "zenburn",
+            "extraKeys": {
+                "Ctrl-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area),
+                "Cmd-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area)
+            }
         },
     )
     when("click", submit_button, handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area))
