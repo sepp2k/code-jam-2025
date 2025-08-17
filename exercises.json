@@ -150,26 +150,26 @@
                 },
                 {
                     "title": "Span Tag <span>",
-                    "explanation": "The <span> element is an inline container used for styling or grouping text.",
-                    "example": "<p>This is a <span style=\"color: red;\">red word</span> inside a sentence.</p>",
-                    "description": "Create a paragraph with one word wrapped in a <span> and styled with red text.",
-                    "answer": "<p>{{*}}<span style=\"color: red;\">{{*}}</span>{{*}}</p>",
+                    "explanation": "The <span> element is an inline container used for grouping text.",
+                    "example": "<p>This is a <span>word</span> inside a sentence.</p>",
+                    "description": "Create a paragraph with one word wrapped in a <span> tag.",
+                    "answer": "<p>{{*}}<span>{{*}}</span>{{*}}</p>",
                     "errorHints": [
-                        {"afterTries": 3, "message": "Use <span> to wrap the word you want to style."},
-                        {"afterTries": 4, "message": "Apply inline CSS with style=\"color: red;\"."},
-                        {"afterTries": 5, "message": "Ensure your <span> is inside the <p> tag."}
+                        {"afterTries": 3, "message": "Use <span> to wrap the word you want to group."},
+                        {"afterTries": 4, "message": "Ensure your <span> is inside the <p> tag."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
                     ]
                 },
                 {
                     "title": "Division Tag <div>",
-                    "explanation": "The <div> element is a block-level container used to group other elements together, often for styling or layout purposes.",
-                    "example": "<div style=\"background-color: lightblue; padding: 10px;\">\n  <p>This is inside a div.</p>\n</div>",
-                    "description": "Create a <div> that contains a paragraph saying 'Hello World!' and has a yellow background.",
-                    "answer": "<div style=\"background-color: yellow;\"><p>Hello World!</p></div>",
+                    "explanation": "The <div> element is a block-level container used to group other elements together.",
+                    "example": "<div><p>This is inside a div.</p></div>",
+                    "description": "Create a <div> that contains a paragraph saying 'Hello World!'.",
+                    "answer": "<div><p>Hello World!</p></div>",
                     "errorHints": [
                         {"afterTries": 3, "message": "Use the <div> tag to create a container."},
-                        {"afterTries": 4, "message": "Apply a yellow background using style=\"background-color: yellow;\"."},
-                        {"afterTries": 5, "message": "Don't forget to put the <p> tag inside the <div>."}
+                        {"afterTries": 4, "message": "Put the <p> tag inside the <div>."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
                     ]
                 }
             ]
@@ -260,6 +260,120 @@
                         {"afterTries": 3, "message": "Nest <a> with <img> inside <p>."},
                         {"afterTries": 4, "message": "Set href and src attributes correctly."},
                         {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Learning Styling",
+            "description": "Learn how to style HTML elements using attributes and CSS.",
+            "exercises": [
+                {
+                    "title": "Styling Span Tags",
+                    "explanation": "The <span> element can be styled using the style attribute.",
+                    "example": "<p>This is a <span style=\"color: red;\">red word</span> inside a sentence.</p>",
+                    "description": "Create a paragraph with the word 'blue' in a <span> and styled with red text.",
+                    "answer": "<p>{{*}}<span style=\"color: red;\">blue</span>{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use <span> to wrap the word you want to style."},
+                        {"afterTries": 4, "message": "Apply inline CSS with style=\"color: red;\"."},
+                        {"afterTries": 5, "message": "Ensure your <span> is inside the <p> tag."}
+                    ]
+                },
+                {
+                    "title": "Styling Division Tags",
+                    "explanation": "The <div> element can be styled using the style attribute.",
+                    "example": "<div style=\"background-color: lightblue; padding: 10px;\">\n  <p>This is inside a div.</p>\n</div>",
+                    "description": "Create a <div> that contains a paragraph saying 'Hello World!' and has a yellow background.",
+                    "answer": "<div style=\"background-color: yellow;\"><p>Hello World!</p></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the <div> tag to create a container."},
+                        {"afterTries": 4, "message": "Apply a yellow background using style=\"background-color: yellow;\"."},
+                        {"afterTries": 5, "message": "Don't forget to put the <p> tag inside the <div>."}
+                    ]
+                },
+                {
+                    "title": "Styled Paragraph <p>",
+                    "explanation": "The <p> element can be styled using the style attribute for text alignment and color.",
+                    "example": "<p style=\"text-align: right; color: purple;\">Right purple text</p>",
+                    "description": "Create a paragraph with any text, styled to be centered and purple.",
+                    "answer": "<p style=\"text-align: center; color: purple;\">{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set text alignment and color."},
+                        {"afterTries": 4, "message": "Make sure the text is centered and purple."},
+                        {"afterTries": 5, "message": "Close the <p> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styled Link <a>",
+                    "explanation": "The <a> element can be styled using the style attribute.",
+                    "example": "<a href=\"https://example.com\" style=\"color: red; text-decoration: underline;\">Visit Example</a>",
+                    "description": "Create a link to 'https://example.com' with any text, styled orange and both underlined and overlined.",
+                    "answer": "<a href=\"https://example.com\" style=\"color: orange; text-decoration: underline overline;\">{{*}}</a>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set color and underline."},
+                        {"afterTries": 4, "message": "Make sure the link is orange and underlined."},
+                        {"afterTries": 5, "message": "Close the <a> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styled Image <img>",
+                    "explanation": "The <img> element can be styled using the style attribute for width and border.",
+                    "example": "<img src=\"image.jpg\" alt=\"desc\" style=\"width: 100px; border: 2px solid black;\">",
+                    "description": "Insert an image with src 'answer.jpg', styled to be 150px wide with a 2px blue border.",
+                    "answer": "<img src=\"answer.jpg\" alt=\"{{*}}\" style=\"width: 150px; border: 2px solid blue;\">",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set width and border."},
+                        {"afterTries": 4, "message": "Make sure the image is 150px wide with a black border."},
+                        {"afterTries": 5, "message": "Close the <img> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Multiple Styles on One Element",
+                    "explanation": "You can combine multiple CSS properties in the style attribute.",
+                    "example": "<p style=\"color: blue; font-weight: bold; text-align: right;\">Styled text</p>",
+                    "description": "Create a paragraph with any text, styled blue, bold, and right-aligned.",
+                    "answer": "<p style=\"color: blue; font-weight: bold; text-align: right;\">{{*}}</p>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use multiple style properties: color, font-weight, text-align."},
+                        {"afterTries": 4, "message": "Make sure the text is blue, bold, and right-aligned."},
+                        {"afterTries": 5, "message": "Close the <p> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styling with Classes",
+                    "explanation": "You can use the class attribute to apply styles achieved using other tags.",
+                    "example": "<div class=\"highlight\">This is highlighted</div>",
+                    "description": "Create a <div> with the class 'highlight' and any text inside.",
+                    "answer": "<div class=\"highlight\">{{*}}</div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the class attribute to set the class name."},
+                        {"afterTries": 4, "message": "Make sure the class is 'highlight'."},
+                        {"afterTries": 5, "message": "Close the <div> tag properly."}
+                    ]
+                },
+                {
+                    "title": "Styling Nested Elements",
+                    "explanation": "You can style nested elements differently using the style attribute.",
+                    "example": "<div style=\"background: red;\"><p style=\"color: blue;\">Green text on pink</p></div>",
+                    "description": "Create a <div> with a pink background containing a paragraph with green text.",
+                    "answer": "<div style=\"background: pink;\"><p style=\"color: green;\">{{*}}</p></div>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Style the <div> and <p> separately."},
+                        {"afterTries": 4, "message": "Make sure the background is pink and the text is green."},
+                        {"afterTries": 5, "message": "Close all tags properly."}
+                    ]
+                },
+                {
+                    "title": "Styling Table Borders",
+                    "explanation": "You can style table borders using the style attribute on the <table> element.",
+                    "example": "<table style=\"border: 2px solid black;\"><tr><td>Cell</td></tr></table>",
+                    "description": "Create a table with any content, styled with a 4px thick blue dashed border.",
+                    "answer": "<table style=\"border: 4px dashed blue;\">{{*}}</table>",
+                    "errorHints": [
+                        {"afterTries": 3, "message": "Use the style attribute to set the border on <table>."},
+                        {"afterTries": 4, "message": "Make sure the border is dashed and blue."},
+                        {"afterTries": 5, "message": "Close the <table> tag properly."}
                     ]
                 }
             ]
