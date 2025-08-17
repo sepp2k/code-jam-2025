@@ -51,6 +51,11 @@ def button(*children: Element | str, **attributes: str) -> Element:
     return _tag("button", *children, **attributes)
 
 
+def iframe(*children: Element | str, **attributes: str) -> Element:
+    """Create an iframe."""
+    return _tag("iframe", *children, **attributes)
+
+
 def nav(*children: Element | str, **attributes: str) -> Element:
     """Create a nav element."""
     return _tag("nav", *children, **attributes)
@@ -69,3 +74,8 @@ def code(*children: Element | str, **attributes: str) -> Element:
 def span(*children: Element | str, **attributes: str) -> Element:
     """Create a span element."""
     return _tag("span", *children, **attributes)
+
+
+def b(*children: Element | str, **attributes: str) -> Element:
+    """Create a bold element."""
+    return _tag("b", *children, **attributes)
