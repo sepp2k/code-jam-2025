@@ -54,3 +54,22 @@ def button(*children: Element | str, **attributes: str) -> Element:
 def iframe(*children: Element | str, **attributes: str) -> Element:
     """Create an iframe."""
     return _tag("iframe", *children, **attributes)
+
+def nav(*children: Element | str, **attributes: str) -> Element:
+    """Create a nav element."""
+    return _tag("nav", *children, **attributes)
+
+
+def a(*children: Element | str, **attributes: str) -> Element:
+    """Create an anchor element."""
+    return _tag("a", *children, **attributes)
+
+
+def code(*children: Element | str, **attributes: str) -> Element:
+    """Create a code element."""
+    return _tag("code", *children, **attributes)
+
+
+def span(*children: Element | str, **attributes: str) -> Element:
+    """Create a span element."""
+    return _tag("span", *children, **attributes)

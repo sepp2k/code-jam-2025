@@ -1,7 +1,8 @@
 from string import Template
 
 import html_helpers
-from html_helpers import br, button, div, em, h1, h2, iframe, p, textarea
+from html_helpers import br, button, div, em, h1, h2, iframe, p, textarea, _tag, span
+from element_components import custom_button, custom_nav
 from pyscript import document, when, window
 from pyscript.web import Element
 
@@ -39,39 +40,118 @@ def _display_result(output_area: Element, result: Element) -> None:
     result_html = result.getHTML()
     _update_iframe(output_area, result_html)
 
+def _evaluate_solution(source: str = "", output_area: Element = None, error_area: Element = None) -> None:
+    if output_area is None or error_area is None:
+        print("Error, invalid inputs")
+    if source.strip() == "":
+        error_area.append(div("Please enter some code to evaluate.", style="color: initial;"))
+        return
 
-def _evaluate_solution(source: str, output_area: Element, error_area: Element) -> None:
+    output_area.innerHTML = ""
     error_area.innerHTML = ""
+
+    is_invalid_html = False
+
+    # Attempt to generate HTML
+    result = None
+    err = None
     try:
         result = eval(source, globals=html_helpers.__dict__)
     except Exception as e:  # noqa: BLE001
-        error_area.append(str(e))
+        is_invalid_html = True
+        err = e
+
+    if is_invalid_html:
+        error_area.append(div("The code did not produce valid HTML element.", br(), str(err)))
         return
 
     # TODO: Before displaying the result we should check that the code actually produced an HTML element and display
     # a user-readable error message instead of crashing if it did not.
-    _display_result(output_area, result)
+#    _display_result(output_area, result)
     # TODO: Here we should check whether the given HTML fits the required structure and produce an error message
     # if it does not.
 
+ #   output_area.append(div(result))
+
 
 def _main() -> None:
+    document.head.append(
+        _tag(
+            "style",
+            """
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+body {font-family: 'Bricolage Grotesque', sans-serif;}
+        """,
+        ),
+    )
+
+    document.body.append(
+        custom_nav(),
+    )
+
+    page_name = document.querySelector("meta[name='page-name']").content
+    match page_name:
+        case "home":
+            _home_page()
+        case "about":
+            _about_page()
+        case "exercises":
+            _exercises_page()
+
+
+def _home_page() -> None:
+    document.body.append(
+        h1("Home Page"),
+        p("This is the home page."),
+    )
+
+
+def _about_page() -> None:
     document.body.append(
         h1("HTML Tutorial"),
-        h2("The em element"),
-        p("The <em> element can be used to emphasized parts of a text ", em("like this"), "."),
-        p("Please create a paragraph (<p> tag) that contains at least two words, exactly one of which is emphasized."),
-        code_area := textarea(),
-        br(),
-        submit_button := button("Submit"),
-        output_area := iframe(id="output-area"),
-        error_area := div(),
     )
+
+
+def _exercises_page() -> None:
+    document.body.append(
+        div(
+            div(
+                h1("Exercises"),
+                h2(
+                    "Create a ",
+                    span("paragraph", style="text-decoration:underline;"),
+                    " tag",
+                ),
+                style="""
+resize: horizontal; overflow: auto; min-width: 25%; max-width:75%;
+border-right: 1px solid #ccc; padding: 0.5em;
+""",
+            ),
+            div(
+                div(
+                    h2("Exercise 1: Create a Custom HTML Element"),
+                    code_area := textarea(""),
+                    submit_button := custom_button("Submit"),
+                    style="border-bottom: 1px solid #ccc;padding: 0.5em;flex: 1;",
+                ),
+                div(
+                    h2("Output:"),
+                    output_area := div(style="margin-top: 1em;"),
+                    error_area := div(style="margin-top: 1em; color: red;"),
+                    style="flex: 1; overflow: auto; padding: 0.5em;",
+                ),
+                style="flex: 1;",
+            ),
+            style="display: flex; width:99vw; height: 95vh; border: 1px solid #ccc;",
+        ),
+    )
+
     editor = window.CodeMirror.fromTextArea(
         code_area,
         {
             "lineNumbers": True,
             "mode": "python",
+            "theme": "zenburn",
         },
     )
     when("click", submit_button, handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area))
