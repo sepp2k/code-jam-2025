@@ -1,14 +1,17 @@
 import html_helpers
 from element_components import custom_button, custom_nav
-from html_helpers import div, h1, h2, p, span, textarea
+from html_helpers import _tag, br, div, h1, h2, p, span, textarea
 from pyscript import document, when, window
 from pyscript.web import Element
 
 
 def _evaluate_solution(source: str = "", output_area: Element = None, error_area: Element = None) -> None:
-    if source.strip() == "" or output_area is None or error_area is None:
+    if output_area is None or error_area is None:
         print("Error, invalid inputs")
-
+    if source.strip() == "":
+        error_area.append(div("Please enter some code to evaluate.", style="color: initial;"))
+        return
+    
     output_area.innerHTML = ""
     error_area.innerHTML = ""
 
@@ -16,23 +19,15 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
 
     # Attempt to generate HTML
     result = None
+    err = None
     try:
         result = eval(source, globals=html_helpers.__dict__)
-    except Exception:  # noqa: BLE001
+    except Exception as e :  # noqa: BLE001
         is_invalid_html = True
-    finally:
-        if result is None:
-            is_invalid_html = True
-
-    # Check if result is a valid HTML element (duck-type)
-    if getattr(result, "classList", None) is None:
-        is_invalid_html = True
-
-    if isinstance(result, str):
-        is_invalid_html = False
+        err = e
 
     if is_invalid_html:
-        error_area.append(div("The code did not produce valid HTML element."))
+        error_area.append(div("The code did not produce valid HTML element.", br(), str(err)))
         return
 
     # TODO: Here we should check whether the given HTML fits the required structure and produce an error message
@@ -42,6 +37,13 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
 
 
 def _main() -> None:
+    document.head.append(
+        _tag("style", """
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+body {font-family: 'Bricolage Grotesque', sans-serif;}
+        """)
+    )
+    
     document.body.append(
         custom_nav(),
     )
