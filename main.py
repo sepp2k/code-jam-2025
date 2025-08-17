@@ -11,7 +11,7 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
     if source.strip() == "":
         error_area.append(div("Please enter some code to evaluate.", style="color: initial;"))
         return
-    
+
     output_area.innerHTML = ""
     error_area.innerHTML = ""
 
@@ -41,9 +41,9 @@ def _main() -> None:
         _tag("style", """
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 body {font-family: 'Bricolage Grotesque', sans-serif;}
-        """)
+        """),
     )
-    
+
     document.body.append(
         custom_nav(),
     )
