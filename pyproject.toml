@@ -61,6 +61,7 @@ ignore = [
     "FIX",
     # Insecure functions (we want to use eval)
     "S307",
+    "SIM108" # Don't force ternary
 ]
 
 [tool.pyright]
