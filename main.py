@@ -22,7 +22,7 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
     err = None
     try:
         result = eval(source, globals=html_helpers.__dict__)
-    except Exception as e :  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
         is_invalid_html = True
         err = e
 
@@ -38,10 +38,13 @@ def _evaluate_solution(source: str = "", output_area: Element = None, error_area
 
 def _main() -> None:
     document.head.append(
-        _tag("style", """
+        _tag(
+            "style",
+            """
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 body {font-family: 'Bricolage Grotesque', sans-serif;}
-        """),
+        """,
+        ),
     )
 
     document.body.append(
