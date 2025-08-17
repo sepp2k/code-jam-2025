@@ -84,3 +84,13 @@ def b(*children: Element | str, **attributes: str) -> Element:
 def img(*children: Element | str, **attributes: str) -> Element:
     """Create an image element."""
     return _tag("img", *children, **attributes)
+
+
+def ul(*children: Element | str, **attributes: str) -> Element:
+    """Create an unordered list element."""
+    return _tag("ul", *children, **attributes)
+
+
+def li(*children: Element | str, **attributes: str) -> Element:
+    """Create a list item element."""
+    return _tag("li", *children, **attributes)

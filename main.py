@@ -1,13 +1,41 @@
 import ast
 from dataclasses import dataclass
 from string import Template
+from typing import Final
 from xml.etree import ElementTree as ET
 
 import html_helpers
 from element_components import custom_button, custom_nav
-from html_helpers import _tag, b, br, div, h1, h2, iframe, p, span, textarea
+from html_helpers import _tag, b, br, div, h1, h2, iframe, li, p, span, textarea, ul
 from pyscript import document, when, window
 from pyscript.web import Element
+
+
+class InvalidInputError(Exception):
+    """Exception raised when the input is invalid."""
+
+
+@dataclass()
+class AppState:
+    """Application state."""
+
+    MAX_ERRORS_BEFORE_HINT: Final[int] = 3
+    error_count: int = 0
+
+    def reset_error_count(self) -> None:
+        """Reset the error count to zero."""
+        self.error_count = 0
+
+    def increment_error_count(self) -> None:
+        """Increment the error count by one."""
+        self.error_count += 1
+
+    def should_show_hint(self) -> bool:
+        """Check if the hint should be shown based on the error count."""
+        return self.error_count >= self.MAX_ERRORS_BEFORE_HINT
+
+    def __str__(self) -> str:
+        return f"{self.error_count=}"
 
 
 @dataclass
@@ -19,13 +47,13 @@ class XPathValidator:
     message: str | None = None  # Error message if validation fails
 
     def validate(self, xml: str) -> bool:
-        """Validate the XPath expression against the provided XML."""
+        """Validate the XPath expression against the provided HTML."""
         try:
             tree = ET.ElementTree(ET.fromstring(xml))
             elements = tree.findall(self.xpath)
-            return self.count is not None and len(elements) != self.count
+            return self.count is not None and len(elements) == self.count
         except ET.ParseError as e:
-            self.message = f"Invalid XML: {e}"
+            self.message = f"Invalid HTML: {e}"
             return False
 
 
@@ -41,6 +69,8 @@ IFRAME_TEMPLATE: str = """<html>
 </html>
 """
 
+LocalAppState = AppState()
+
 
 def _update_iframe(frame: Element, content: str | Element) -> None:
     """Update the contents of a given iframe.
@@ -55,12 +85,12 @@ def _update_iframe(frame: Element, content: str | Element) -> None:
     frame.setAttribute("srcdoc", iframe_contents)
 
 
-def _display_result(output_area: Element, result: Element) -> None:
+def _display_result(output_area: Element, result: Element | str) -> None:
     """Display the result in the output area.
 
     Args:
         output_area (Element): The element to update with the result.
-        result (Element): The result to display.
+        result (Element | str): The result to display.
 
     """
     if isinstance(result, str) or hasattr(result, "getHTML"):
@@ -69,6 +99,55 @@ def _display_result(output_area: Element, result: Element) -> None:
         result_html = str(result)
 
     _update_iframe(output_area, result_html)
+
+
+def _update_error(error_area: Element, title: str, message_type: str, message: str | Element) -> None:
+    error_area.append(div(title, br(), b(message_type), f": {message}", br()))
+
+
+def _update_info(info_area: Element, title: str | Element | None, info: list[str | Element] | None) -> None:
+    if title is None:
+        title = ""
+
+    if info is None or len(info) == 0:
+        info_area.append(div(title))
+    elif len(info) == 1:
+        info_area.append(div(b(title), f" {info[0]}"))
+    else:
+        info_area.append(div(ul(b(title), *[li(i) for i in info])))
+
+
+def _validate_user_input(source: str = "") -> Element:
+    # Attempt to generate HTML
+    output = div()
+    err = None
+    is_invalid_html = False
+    environment = {name: value for name, value in html_helpers.__dict__.items() if not name.startswith("_")}
+
+    try:
+        tree = ast.parse(source)
+        for statement in tree.body:
+            match statement:
+                case ast.Expr():
+                    result = eval(compile(ast.Expression(statement.value), "", mode="eval"), globals=environment)
+                    if hasattr(result, "classList") or isinstance(result, str):
+                        output.append(result)
+                    else:
+                        is_invalid_html = True
+                        err = f"""
+                        Expression returned {result} (of type {type(result)}), instead of an HTML element or string
+                        """.strip()
+                case ast.FunctionDef() | ast.Assign():
+                    exec(compile(ast.Module([statement]), "", mode="exec"), globals=environment)
+    except Exception as e:
+        if err is None:
+            err = str(e)
+        raise InvalidInputError(err) from e
+
+    if is_invalid_html:
+        raise InvalidInputError(err)
+
+    return output
 
 
 def _evaluate_solution(
@@ -89,40 +168,33 @@ def _evaluate_solution(
     error_area.innerHTML = ""
     info_area.innerHTML = ""
 
-    is_invalid_html = False
-
-    # Attempt to generate HTML
-    output = div()
-    err = None
-    environment = {name: value for name, value in html_helpers.__dict__.items() if not name.startswith("_")}
+    # validate user input
     try:
-        tree = ast.parse(source)
-        for statement in tree.body:
-            match statement:
-                case ast.Expr():
-                    result = eval(compile(ast.Expression(statement.value), "", mode="eval"), globals=environment)
-                    if hasattr(result, "classList") or isinstance(result, str):
-                        output.append(result)
-                    else:
-                        is_invalid_html = True
-                        err = f"""
-                        Expression returned {result} (of type {type(result)}), instead of an HTML element or string
-                        """.strip()
-                case ast.FunctionDef() | ast.Assign():
-                    exec(compile(ast.Module([statement]), "", mode="exec"), globals=environment)
-    except Exception as e:
-        is_invalid_html = True
-        err = e
-
-    if is_invalid_html:
-        error_area.append(div("The code did not produce valid HTML element.", br(), b("Error"), f": {err!s}"))
+        output = _validate_user_input(source)
+    except InvalidInputError as e:
+        _update_error(error_area, "An error occurred while evaluating the code.", "Error", str(e))
         _update_iframe(output_area, "")
         return
 
-    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected 2 paragraph elements")], output)
-    info_area.append(msg)
+    # validate generated HTML
+    matched, msg = _matches_expected([XPathValidator(".//p", 2, "Expected 2 paragraph elements")], output)
+    if matched:
+        _update_info(info_area, b("Good job!"), ["You produced the expected HTML."])
+        LocalAppState.reset_error_count()
+
+    else:
+        LocalAppState.increment_error_count()
+        if LocalAppState.should_show_hint():
+            # display hints
+            _update_info(
+                info_area,
+                b("Hints"),
+                ["Did you use the correct tag?", "Try wrapping the two paragraphs in a div?"],
+            )
+        _update_error(error_area, "The code did not produce the expected HTML.", "Error", msg)
 
     _display_result(output_area, output)
+    print(LocalAppState)
 
 
 def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[bool, str | Element]:
@@ -200,7 +272,7 @@ border-right: 1px solid #ccc; padding: 0.5em;
             ),
             div(
                 div(
-                    h2("Exercise 1: Create a Custom HTML Element"),
+                    h2("Exercise 1: Create two paragraphs"),
                     code_area := textarea(""),
                     submit_button := custom_button("Submit"),
                     span("Or press Ctrl/Cmd+Enter", style="margin-left: 1em; color: #aaa"),
