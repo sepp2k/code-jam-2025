@@ -42,7 +42,7 @@ IFRAME_TEMPLATE: str = """<html>
 """
 
 
-def _update_iframe(frame: Element, content: str | Element) -> None:
+def _update_iframe(frame: Element, content: Element) -> None:
     """Update the contents of a given iframe.
 
     Args:
