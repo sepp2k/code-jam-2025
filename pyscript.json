@@ -2,6 +2,8 @@
   "files": {
     "html_helpers.py": "html_helpers.py",
     "element_components.py": "element_components.py",
-    "solution_validator.py": "solution_validator.py"
+    "solution_validator.py": "solution_validator.py",
+    "exercises.py": "exercises.py",
+    "exercises.json": "exercises.json"
   }
 }

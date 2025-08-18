@@ -23,6 +23,11 @@ def h2(*children: Element | str, **attributes: str) -> Element:
     return _tag("h2", *children, **attributes)
 
 
+def h3(*children: Element | str, **attributes: str) -> Element:
+    """Create a third level heading."""
+    return _tag("h3", *children, **attributes)
+
+
 def div(*children: Element | str, **attributes: str) -> Element:
     """Create a div element."""
     return _tag("div", *children, **attributes)
@@ -101,3 +106,23 @@ def hr(**attributes: str) -> Element:
     else:
         attributes["style"] = default_style
     return _tag("hr", **attributes)
+
+
+def ul(*children: Element | str, **attributes: str) -> Element:
+    """Create an unordered list."""
+    return _tag("ul", *children, **attributes)
+
+
+def li(*children: Element | str, **attributes: str) -> Element:
+    """Create a list item."""
+    return _tag("li", *children, **attributes)
+
+
+def details(*children: Element | str, **attributes: str) -> Element:
+    """Create a details element."""
+    return _tag("details", *children, **attributes)
+
+
+def summary(*children: Element | str, **attributes: str) -> Element:
+    """Create a summary element."""
+    return _tag("summary", *children, **attributes)
