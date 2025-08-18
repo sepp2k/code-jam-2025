@@ -1,12 +1,37 @@
 import ast
+from functools import partial
+from pathlib import Path
 from string import Template
+from typing import Final
 
 import html_helpers
 from element_components import custom_button, custom_code_block, custom_nav
-from html_helpers import _tag, a, b, br, div, h1, h2, hr, i, iframe, p, span, textarea
+from exercises import Exercise, ExerciseGroup, load_exercises_from_json
+from html_helpers import (
+    _tag,
+    a,
+    b,
+    br,
+    details,
+    div,
+    h1,
+    h2,
+    hr,
+    i,
+    iframe,
+    li,
+    p,
+    span,
+    summary,
+    textarea,
+    ul,
+)
+from pyodide.ffi.wrappers import add_event_listener
 from pyscript import document, when, window
 from pyscript.web import Element
 from solution_validator import validate_solution
+
+EXERCISES_JSON_FILE: Final[Path] = Path("exercises.json")
 
 IFRAME_TEMPLATE: str = """<html>
     <head>
@@ -19,6 +44,24 @@ IFRAME_TEMPLATE: str = """<html>
     </body>
 </html>
 """
+
+
+class AppStorage:
+    """Application's local storage."""
+
+    EXERCISES: list[ExerciseGroup] = load_exercises_from_json(EXERCISES_JSON_FILE)
+    current_exercise: Exercise = EXERCISES[0].exercises[0]
+
+    def get_current_exercise(self) -> Exercise:
+        """Get current exercise that's being worked on."""
+        return self.current_exercise
+
+    def set_current_exercise_by_index(self, group_index: int, exercise_index: int) -> None:
+        """Set current exercise that's being worked on."""
+        self.current_exercise = self.EXERCISES[group_index].exercises[exercise_index]
+
+
+AppState: AppStorage = AppStorage()
 
 
 def _update_iframe(frame: Element, content: Element) -> None:
@@ -220,16 +263,69 @@ def _home_page() -> None:
     )
 
 
-def _exercises_page() -> None:
+def _exercise_link_listener(group_index: int, exercise_index: int, *args, **kwargs) -> None:  # noqa: ARG001, ANN002, ANN003
+    AppState.set_current_exercise_by_index(group_index, exercise_index)
+    _main()
+
+
+def _create_exercise_group(exercise_group: ExerciseGroup, group_index: int) -> Element:
+    """Create a collapsible exercise group."""
+    # create links for each exercise
+    exercise_links = [
+        a(
+            f"{index + 1}. {exercise.title}",
+            href="#",
+            style="text-decoration: none;",
+            onmouseover="this.style.textDecoration = 'underline';",
+            onmouseleave="this.style.textDecoration = 'none';",
+        )
+        for index, exercise in enumerate(exercise_group.exercises)
+    ]
+
+    # add callback for each link
+    for index, link in enumerate(exercise_links):
+        add_event_listener(
+            link,
+            "click",
+            partial(
+                _exercise_link_listener,
+                group_index,
+                index,
+            ),
+        )
+
+    # create exercise list
+    exercise_list = ul(
+        *[li(exercise_link, style="margin: 0.5em 0;") for exercise_link in exercise_links],
+        style="list-style-type: none; margin: 0; padding: 0; cursor: pointer;",
+    )
+
+    # create collapsible exercise group
+    group = details(
+        summary(
+            b(f"{group_index + 1}. {exercise_group.title}"),
+            style="cursor: pointer; margin: 0; border: 1px solid #eee;",
+        ),
+        exercise_list,
+    )
+
+    if AppState.current_exercise in exercise_group.exercises:
+        group.open = True
+
+    return group
+
+
+def list_exercises() -> list[Element]:
+    """List exercises as a collapsible list of exercise groups."""
+    return [_create_exercise_group(exercise_group, index) for index, exercise_group in enumerate(AppState.EXERCISES)]
+
+
+def _exercises_page(exercise: Exercise = AppState.current_exercise) -> None:
     document.body.append(
         div(
             div(
                 h1("Exercises"),
-                h2(
-                    "Create a ",
-                    span("paragraph", style="text-decoration:underline;"),
-                    " tag",
-                ),
+                *list_exercises(),
                 style="""
 resize: horizontal; overflow: auto; min-width: 25%; max-width:75%;
 border-right: 1px solid #ccc; padding: 0.5em;
@@ -237,7 +333,8 @@ border-right: 1px solid #ccc; padding: 0.5em;
             ),
             div(
                 div(
-                    h2("Exercise 1: Create a Custom HTML Element"),
+                    h2(exercise.title),
+                    p(exercise.description, style="margin: 0.5em 0;"),
                     code_area := textarea(""),
                     submit_button := custom_button("Submit"),
                     span("Or press Ctrl/Cmd+Enter", style="margin-left: 1em; color: #aaa"),
