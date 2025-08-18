@@ -1,33 +1,12 @@
 import ast
-from dataclasses import dataclass
 from string import Template
-from xml.etree import ElementTree as ET
 
 import html_helpers
 from element_components import custom_button, custom_code_block, custom_nav
 from html_helpers import _tag, a, b, br, div, h1, h2, hr, i, iframe, p, span, textarea
 from pyscript import document, when, window
 from pyscript.web import Element
-
-
-@dataclass
-class XPathValidator:
-    """XPath expression validator."""
-
-    xpath: str  # XPath expression to check
-    count: int | None = None  # Expected number of occurrences
-    message: str | None = None  # Error message if validation fails
-
-    def validate(self, xml: str) -> bool:
-        """Validate the XPath expression against the provided XML."""
-        try:
-            tree = ET.ElementTree(ET.fromstring(xml))
-            elements = tree.findall(self.xpath)
-            return self.count is not None and len(elements) != self.count
-        except ET.ParseError as e:
-            self.message = f"Invalid XML: {e}"
-            return False
-
+from solution_validator import validate_solution
 
 IFRAME_TEMPLATE: str = """<html>
     <head>
@@ -42,7 +21,7 @@ IFRAME_TEMPLATE: str = """<html>
 """
 
 
-def _update_iframe(frame: Element, content: str | Element) -> None:
+def _update_iframe(frame: Element, content: Element) -> None:
     """Update the contents of a given iframe.
 
     Args:
@@ -119,30 +98,10 @@ def _evaluate_solution(
         _update_iframe(output_area, "")
         return
 
-    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected 2 paragraph elements")], output)
+    msg = validate_solution("<p>{{*}}</p>", output)
     info_area.append(msg)
 
     _display_result(output_area, output)
-
-
-def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[bool, str | Element]:
-    """Validate HTML output against expected XPath validators."""
-    # Normalize actual HTML
-    if hasattr(actual, "outerHTML"):
-        actual_html = actual.outerHTML
-    else:
-        actual_html = str(actual).strip()
-
-    # Run validators
-    for validator in expected:
-        if not validator.validate(actual_html):
-            msg = div(
-                validator.message or "Validation failed.",
-                style="color:red; font-weight:bold;",
-            )
-            return False, msg
-
-    return True, div("Output matches ✅", style="color:green; font-weight:bold;")
 
 
 def _main() -> None:
