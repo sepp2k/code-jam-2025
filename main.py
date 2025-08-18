@@ -265,6 +265,7 @@ def _home_page() -> None:
 
 def _exercise_link_listener(group_index: int, exercise_index: int, *args, **kwargs) -> None:  # noqa: ARG001, ANN002, ANN003
     AppState.set_current_exercise_by_index(group_index, exercise_index)
+    document.body.innerHTML = ""
     _main()
 
 
@@ -320,7 +321,8 @@ def list_exercises() -> list[Element]:
     return [_create_exercise_group(exercise_group, index) for index, exercise_group in enumerate(AppState.EXERCISES)]
 
 
-def _exercises_page(exercise: Exercise = AppState.current_exercise) -> None:
+def _exercises_page() -> None:
+    exercise = AppState.get_current_exercise()
     document.body.append(
         div(
             div(
