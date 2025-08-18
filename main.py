@@ -89,7 +89,10 @@ def _update_iframe(frame: Element, content: Element) -> None:
         content (str | Element): The HTML content to display in the iframe's body.
 
     """
-    content = content.outerHTML
+    try:
+        content = content.outerHTML
+    except Exception as e:
+        print(e)
     iframe_contents = Template(IFRAME_TEMPLATE).safe_substitute(RESULT=content)
     frame.setAttribute("srcdoc", iframe_contents)
 
