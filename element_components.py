@@ -61,7 +61,7 @@ def custom_code_block(text: str, *children: str | Element, **attributes: str) ->
     return div(
         pre,
         language_tip,
-        (copy_tip if make_copy!="none" else ""),
+        (copy_tip if make_copy != "none" else ""),
         style="position: relative; border-bottom: 4px solid #0065d7; padding: 0.5em; border: 2px solid #4f4f4f;"
         "background-color: #1f1f1f; color: #f8f8f2;",
     )
