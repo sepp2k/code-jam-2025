@@ -2,6 +2,8 @@
 
 An interactive web-based HTML tutorial application that teaches HTML through hands-on Python coding exercises. Built with `PyScript`, this educational tool allows users to write Python code using HTML helper functions and see their HTML output.
 
+Check it out [here](https://sepp2k.github.io/code-jam-2025/)
+
 **Key Value**: Learn HTML by writing Python code instead of raw HTML markup, with instant feedback and validation.
 
 ## Demo
