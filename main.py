@@ -337,7 +337,11 @@ border-right: 1px solid #ccc; padding: 0.5em;
             div(
                 div(
                     h2(exercise.title),
-                    p(exercise.description, style="margin: 0.5em 0;"),
+                    div(
+                        p(exercise.description, style="margin: 0.5em 0;"),
+                        custom_code_block(exercise.example, language="Example", copy_tip="none"),
+                        br(),
+                    ),
                     code_area := textarea(""),
                     submit_button := custom_button("Submit"),
                     span("Or press Ctrl/Cmd+Enter", style="margin-left: 1em; color: #aaa"),
