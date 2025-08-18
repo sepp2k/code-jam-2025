@@ -223,7 +223,7 @@ def _404_page() -> None:
             p("The page you are looking for does not exist."),
             a(
                 "Go back to Home",
-                href="/index.html",
+                href="./index.html",
                 style="color: blue; text-decoration: none;",
                 onmouseover="this.style.textDecoration = 'underline';",
                 onmouseleave="this.style.textDecoration = 'none';",
