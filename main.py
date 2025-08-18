@@ -52,6 +52,10 @@ class AppStorage:
     EXERCISES: list[ExerciseGroup] = load_exercises_from_json(EXERCISES_JSON_FILE)
     current_exercise: Exercise = EXERCISES[0].exercises[0]
     wrong_submissions: int = 0
+    solved_exercises: set | None = None
+
+    def __init__(self) -> None:
+        self.solved_exercises = set()
 
     def get_current_exercise(self) -> Exercise:
         """Get current exercise that's being worked on."""
@@ -128,7 +132,6 @@ def _validate_user_input(source: str) -> Element:
 
 def _evaluate_solution(
     source: str = "",
-    expected: str = "",
     output_area: Element = None,
     error_area: Element = None,
     info_area: Element = None,
@@ -145,6 +148,9 @@ def _evaluate_solution(
     error_area.innerHTML = ""
     info_area.innerHTML = ""
 
+    exercise = AppState.get_current_exercise()
+    expected = exercise.answer
+
     # Attempt to generate HTML
     try:
         output = _validate_user_input(source)
@@ -158,6 +164,7 @@ def _evaluate_solution(
         AppState.increment_wrong_submissions()
     else:
         AppState.reset_wrong_submissions()
+        AppState.solved_exercises.add(exercise.title)
 
     hints = [
         li(hint.message)
@@ -216,7 +223,7 @@ def _404_page() -> None:
             p("The page you are looking for does not exist."),
             a(
                 "Go back to Home",
-                href="/index.html",
+                href="./index.html",
                 style="color: blue; text-decoration: none;",
                 onmouseover="this.style.textDecoration = 'underline';",
                 onmouseleave="this.style.textDecoration = 'none';",
@@ -301,6 +308,7 @@ def _create_exercise_group(exercise_group: ExerciseGroup, group_index: int) -> E
     exercise_links = [
         a(
             f"{index + 1}. {exercise.title}",
+            span("✓", style="color: green;") if exercise.title in AppState.solved_exercises else "",
             href="#",
             style="text-decoration: none;",
             onmouseover="this.style.textDecoration = 'underline';",
@@ -394,14 +402,12 @@ border-right: 1px solid #ccc; padding: 0.5em;
             "extraKeys": {
                 "Ctrl-Enter": lambda _: _evaluate_solution(
                     editor.getValue(),
-                    AppState.current_exercise.answer,
                     output_area,
                     error_area,
                     info_area,
                 ),
                 "Cmd-Enter": lambda _: _evaluate_solution(
                     editor.getValue(),
-                    AppState.current_exercise.answer,
                     output_area,
                     error_area,
                     info_area,
@@ -414,7 +420,6 @@ border-right: 1px solid #ccc; padding: 0.5em;
         submit_button,
         handler=lambda _: _evaluate_solution(
             editor.getValue(),
-            AppState.current_exercise.answer,
             output_area,
             error_area,
             info_area,
