@@ -69,7 +69,7 @@
                     "explanation": "The <mark> element is used to highlight text. Fun fact: you can use CSS to change its background color!",
                     "example": "<p>This is <mark>highlighted</mark></p>",
                     "description": "Create a paragraph with the first word highlighted.",
-                    "answer": "<p><mark></mark>{{*}}</p>",
+                    "answer": "<p><mark>{{*}}</mark>{{*}}</p>",
                     "errorHints": [
                         {"afterTries": 3, "message": "Try using the <mark> tag to highlight your text."},
                         {"afterTries": 4, "message": "Remember to close the <mark> tag properly."},

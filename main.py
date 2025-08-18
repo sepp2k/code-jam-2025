@@ -159,7 +159,7 @@ def _evaluate_solution(
         output = _validate_user_input(source)
     except Exception as err:
         error_area.append(div("The code did not produce valid HTML element.", br(), b("Error"), f": {err!s}"))
-        _update_iframe(output_area, "")
+        _display_result(output_area, "")
         return
 
     correct_solution, msg = validate_solution(expected, output)
@@ -301,6 +301,7 @@ def _home_page() -> None:
 
 def _exercise_link_listener(group_index: int, exercise_index: int, *args, **kwargs) -> None:  # noqa: ARG001, ANN002, ANN003
     AppState.set_current_exercise_by_index(group_index, exercise_index)
+    AppState.reset_wrong_submissions()
     document.body.innerHTML = ""
     _main()
 
