@@ -9,7 +9,7 @@ def custom_nav() -> Element:
     a_onmouseleave = "this.style.textDecoration = 'none';"
     return nav(
         div(
-            a(img(src="/assets/icon.png", alt="Logo", style="width: 3em"), href="./"),
+            a(img(src="./assets/icon.png", alt="Logo", style="width: 3em"), href="./"),
             a("Home", href="./", style=a_style, onmouseover=a_onmouseover, onmouseleave=a_onmouseleave),
             a(
                 "Exercises",
