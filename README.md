@@ -137,7 +137,7 @@ To pass an exercise, you ned to write Python code that mirrors the requested HTM
 - `b()`: Bold element
 - `img()`: Image element
 
-> check available HTML helper elements i `helper_elements.py`
+> check available HTML helper elements in `helper_elements.py`
 
 ## Technical Details
 
@@ -171,4 +171,4 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE.txt
   - [Mohammad](https://github.com/ece-mohammad) - Developer
 - **PyScript Team** for making Python in the browser possible
 - **CodeMirror** for the excellent code editor component
-- **Contest Community** for inspiration and collaborative spirit
+- **[Python Discord](https://discord.com/invite/python)** for the amazing contest, inspiration, and collaborative spirit
