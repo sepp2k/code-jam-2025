@@ -91,8 +91,8 @@ def _update_iframe(frame: Element, content: Element) -> None:
     """
     try:
         content = content.outerHTML
-    except:
-        pass
+    except Exception as e:
+        print(e)
     iframe_contents = Template(IFRAME_TEMPLATE).safe_substitute(RESULT=content)
     frame.setAttribute("srcdoc", iframe_contents)
 
