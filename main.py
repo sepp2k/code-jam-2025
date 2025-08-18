@@ -95,6 +95,7 @@ def _display_result(output_area: Element, result: Element) -> None:
 
 def _evaluate_solution(
     source: str = "",
+    expected: str = "",
     output_area: Element = None,
     error_area: Element = None,
     info_area: Element = None,
@@ -141,7 +142,7 @@ def _evaluate_solution(
         _update_iframe(output_area, "")
         return
 
-    msg = validate_solution("<p>{{*}}</p>", output)
+    msg = validate_solution(expected, output)
     info_area.append(msg)
 
     _display_result(output_area, output)
@@ -362,15 +363,33 @@ border-right: 1px solid #ccc; padding: 0.5em;
             "mode": "python",
             "theme": "zenburn",
             "extraKeys": {
-                "Ctrl-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
-                "Cmd-Enter": lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
+                "Ctrl-Enter": lambda _: _evaluate_solution(
+                    editor.getValue(),
+                    AppState.current_exercise.answer,
+                    output_area,
+                    error_area,
+                    info_area,
+                ),
+                "Cmd-Enter": lambda _: _evaluate_solution(
+                    editor.getValue(),
+                    AppState.current_exercise.answer,
+                    output_area,
+                    error_area,
+                    info_area,
+                ),
             },
         },
     )
     when(
         "click",
         submit_button,
-        handler=lambda _: _evaluate_solution(editor.getValue(), output_area, error_area, info_area),
+        handler=lambda _: _evaluate_solution(
+            editor.getValue(),
+            AppState.current_exercise.answer,
+            output_area,
+            error_area,
+            info_area,
+        ),
     )
 
 
