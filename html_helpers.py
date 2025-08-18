@@ -171,3 +171,8 @@ def tr(*children: Element | str, **attributes: str) -> Element:
 def td(*children: Element | str, **attributes: str) -> Element:
     """Create a table data element."""
     return _tag("td", *children, **attributes)
+
+
+def mark(*children: Element | str, **attributes: str) -> Element:
+    """Create a mark element."""
+    return _tag("mark", *children, **attributes)
