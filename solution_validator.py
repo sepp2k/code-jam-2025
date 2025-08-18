@@ -82,6 +82,8 @@ def _matches_text(expected: str | None, actual: str | None) -> _Result:
     if expected is None:
         return _test_failure_div(f"Unexpected text '{actual}'")
     if actual is None:
+        if expected == "{{*}}":
+            return None
         return _test_failure_div(f"Missing text '{expected}'")
     expected_regex = expected.replace("{{*}}", ".*")
     if re.fullmatch(expected_regex, actual) is None:
