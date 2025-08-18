@@ -28,6 +28,21 @@ def h3(*children: Element | str, **attributes: str) -> Element:
     return _tag("h3", *children, **attributes)
 
 
+def h4(*children: Element | str, **attributes: str) -> Element:
+    """Create a fourth level heading."""
+    return _tag("h4", *children, **attributes)
+
+
+def h5(*children: Element | str, **attributes: str) -> Element:
+    """Create a fifth level heading."""
+    return _tag("h5", *children, **attributes)
+
+
+def h6(*children: Element | str, **attributes: str) -> Element:
+    """Create a sixth level heading."""
+    return _tag("h6", *children, **attributes)
+
+
 def div(*children: Element | str, **attributes: str) -> Element:
     """Create a div element."""
     return _tag("div", *children, **attributes)
@@ -113,6 +128,11 @@ def ul(*children: Element | str, **attributes: str) -> Element:
     return _tag("ul", *children, **attributes)
 
 
+def ol(*children: Element | str, **attributes: str) -> Element:
+    """Create an ordered list."""
+    return _tag("ol", *children, **attributes)
+
+
 def li(*children: Element | str, **attributes: str) -> Element:
     """Create a list item."""
     return _tag("li", *children, **attributes)
@@ -126,3 +146,28 @@ def details(*children: Element | str, **attributes: str) -> Element:
 def summary(*children: Element | str, **attributes: str) -> Element:
     """Create a summary element."""
     return _tag("summary", *children, **attributes)
+
+
+def strong(*children: Element | str, **attributes: str) -> Element:
+    """Create a strong element."""
+    return _tag("strong", *children, **attributes)
+
+
+def u(*children: Element | str, **attributes: str) -> Element:
+    """Create an underline element."""
+    return _tag("u", *children, **attributes)
+
+
+def table(*children: Element | str, **attributes: str) -> Element:
+    """Create a table element."""
+    return _tag("table", *children, **attributes)
+
+
+def tr(*children: Element | str, **attributes: str) -> Element:
+    """Create a table row element."""
+    return _tag("tr", *children, **attributes)
+
+
+def td(*children: Element | str, **attributes: str) -> Element:
+    """Create a table data element."""
+    return _tag("td", *children, **attributes)
