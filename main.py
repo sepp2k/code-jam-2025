@@ -211,7 +211,7 @@ def _home_page() -> None:
                 "• @AMK (Amen Ellah)",
                 "• @kuro (Mohammad)",
                 language="authors",
-                copy_tip=False,
+                copy_tip="none",
             ),
             style="display:flex; flex-direction:column; max-width: 70vw; margin: 2em auto 2em auto;"
             "background-color:#eeeeee; padding: 2em; border-radius: 1em; "

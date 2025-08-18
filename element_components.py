@@ -48,10 +48,9 @@ def custom_code_block(text: str, *children: str | Element, **attributes: str) ->
         language_tip = span(attributes["language"], style=language_style)
     language_tip = language_tip or span("text", style=language_style)
 
-    make_copy = attributes.get("copy_tip", True)
+    make_copy = attributes.get("copy_tip", "copy")
     copy_tip = a(
         span("📄 copy"),
-        href="#",
         onclick=f"copyToClipboard(`{text}`, () => {{ this.querySelector('span').textContent = '✔ copied';"
         "setTimeout(() => this.querySelector('span').textContent = '📄 copy', 2000); })",
         style=f"{language_style}; text-decoration: none; left: initial; right: .2em;",
@@ -62,7 +61,7 @@ def custom_code_block(text: str, *children: str | Element, **attributes: str) ->
     return div(
         pre,
         language_tip,
-        (copy_tip if make_copy else ""),
+        (copy_tip if make_copy!="none" else ""),
         style="position: relative; border-bottom: 4px solid #0065d7; padding: 0.5em; border: 2px solid #4f4f4f;"
         "background-color: #1f1f1f; color: #f8f8f2;",
     )
