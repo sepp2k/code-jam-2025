@@ -82,13 +82,16 @@ def b(*children: Element | str, **attributes: str) -> Element:
     """Create a bold element."""
     return _tag("b", *children, **attributes)
 
+
 def i(*children: Element | str, **attributes: str) -> Element:
     """Create an italic element."""
     return _tag("i", *children, **attributes)
 
+
 def img(*children: Element | str, **attributes: str) -> Element:
     """Create an image element."""
     return _tag("img", *children, **attributes)
+
 
 def hr(**attributes: str) -> Element:
     """Create a horizontal rule."""
