@@ -4,6 +4,8 @@ from pyscript.web import Element
 
 def _tag(tag_name: str, *children: Element | str, **attributes: str) -> Element:
     node = document.createElement(tag_name)
+    if "className" in attributes:
+        node.setAttribute("class", attributes["className"])
     for key, value in attributes.items():
         node.setAttribute(key, value)
     for child in children:
@@ -81,6 +83,21 @@ def b(*children: Element | str, **attributes: str) -> Element:
     return _tag("b", *children, **attributes)
 
 
+def i(*children: Element | str, **attributes: str) -> Element:
+    """Create an italic element."""
+    return _tag("i", *children, **attributes)
+
+
 def img(*children: Element | str, **attributes: str) -> Element:
     """Create an image element."""
     return _tag("img", *children, **attributes)
+
+
+def hr(**attributes: str) -> Element:
+    """Create a horizontal rule."""
+    default_style = "border: none; border-top: 1px solid #ccc; margin: .1em 0;"
+    if "style" in attributes:
+        attributes["style"] += default_style
+    else:
+        attributes["style"] = default_style
+    return _tag("hr", **attributes)

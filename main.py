@@ -1,33 +1,12 @@
 import ast
-from dataclasses import dataclass
 from string import Template
-from xml.etree import ElementTree as ET
 
 import html_helpers
-from element_components import custom_button, custom_nav
-from html_helpers import _tag, b, br, div, h1, h2, iframe, p, span, textarea
+from element_components import custom_button, custom_code_block, custom_nav
+from html_helpers import _tag, a, b, br, div, h1, h2, hr, i, iframe, p, span, textarea
 from pyscript import document, when, window
 from pyscript.web import Element
-
-
-@dataclass
-class XPathValidator:
-    """XPath expression validator."""
-
-    xpath: str  # XPath expression to check
-    count: int | None = None  # Expected number of occurrences
-    message: str | None = None  # Error message if validation fails
-
-    def validate(self, xml: str) -> bool:
-        """Validate the XPath expression against the provided XML."""
-        try:
-            tree = ET.ElementTree(ET.fromstring(xml))
-            elements = tree.findall(self.xpath)
-            return self.count is not None and len(elements) != self.count
-        except ET.ParseError as e:
-            self.message = f"Invalid XML: {e}"
-            return False
-
+from solution_validator import validate_solution
 
 IFRAME_TEMPLATE: str = """<html>
     <head>
@@ -42,7 +21,7 @@ IFRAME_TEMPLATE: str = """<html>
 """
 
 
-def _update_iframe(frame: Element, content: str | Element) -> None:
+def _update_iframe(frame: Element, content: Element) -> None:
     """Update the contents of a given iframe.
 
     Args:
@@ -119,40 +98,31 @@ def _evaluate_solution(
         _update_iframe(output_area, "")
         return
 
-    matched, msg = _matches_expected([XPathValidator("//p", 2, "Expected 2 paragraph elements")], output)
+    msg = validate_solution("<p>{{*}}</p>", output)
     info_area.append(msg)
 
     _display_result(output_area, output)
-
-
-def _matches_expected(expected: list[XPathValidator], actual: Element) -> tuple[bool, str | Element]:
-    """Validate HTML output against expected XPath validators."""
-    # Normalize actual HTML
-    if hasattr(actual, "outerHTML"):
-        actual_html = actual.outerHTML
-    else:
-        actual_html = str(actual).strip()
-
-    # Run validators
-    for validator in expected:
-        if not validator.validate(actual_html):
-            msg = div(
-                validator.message or "Validation failed.",
-                style="color:red; font-weight:bold;",
-            )
-            return False, msg
-
-    return True, div("Output matches ✅", style="color:green; font-weight:bold;")
 
 
 def _main() -> None:
     document.head.append(
         _tag(
             "style",
+            "@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family"
+            "=Google+Sans"
+            "+Code:ital,wght@0,300..800;1,300..800&display=swap');"
+            "body {font-family: 'Bricolage Grotesque', sans-serif;}"
+            ".cm-editor, .CodeMirror {font-family: 'Google Sans Code', monospace;}",
+        ),
+        _tag(
+            "script",
             """
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
-body {font-family: 'Bricolage Grotesque', sans-serif;}
-        """,
+function copyToClipboard(text, callback=()=>{}) {
+    navigator.clipboard.writeText(text).then(() => {
+        if (callback) callback();
+    });
+}
+""",
         ),
     )
 
@@ -164,22 +134,89 @@ body {font-family: 'Bricolage Grotesque', sans-serif;}
     match page_name:
         case "home":
             _home_page()
-        case "about":
-            _about_page()
         case "exercises":
             _exercises_page()
+        case _:
+            _404_page()
+
+
+def _404_page() -> None:
+    document.body.append(
+        div(
+            h1("404 Not Found"),
+            p("The page you are looking for does not exist."),
+            a(
+                "Go back to Home",
+                href="/index.html",
+                style="color: blue; text-decoration: none;",
+                onmouseover="this.style.textDecoration = 'underline';",
+                onmouseleave="this.style.textDecoration = 'none';",
+            ),
+            style="text-align: center; margin-top: 2em;",
+        ),
+    )
 
 
 def _home_page() -> None:
     document.body.append(
-        h1("Home Page"),
-        p("This is the home page."),
-    )
-
-
-def _about_page() -> None:
-    document.body.append(
-        h1("HTML Tutorial"),
+        div(
+            h1("About this Project", style="margin:0;"),
+            p(
+                "This project was created as part of ",
+                b("Python Code Jam 2025"),
+                ", where the theme was ",
+                i("Wrong Tool for the Job"),
+                ".",
+                style="margin: 0.5em 0 1em 0;",
+            ),
+            hr(),
+            h2("The Idea", style="margin:1em 0 0 0;"),
+            p(
+                "Our entry takes the form of an ",
+                b("HTML Tutorial"),
+                " but with a twist. Instead of writing HTML, user write ",
+                b("Python code"),
+                " to complete each exercise. For example, rather than typing:",
+                style="margin: 0.5em 0 1em 0;",
+            ),
+            custom_code_block("<div>Hello <em>World</em>!</div>", language="html"),
+            p("the user writes:"),
+            custom_code_block('div("Hello ", em("World"), "!")', language="python"),
+            p(
+                "The Python is then executed directly in the browser to generate the HTML, which is "
+                "displayed alongside the code editor. Each chapter introduces a new HTML concept, "
+                "followed by exercises that can only be solved by writing Python that outputs the "
+                "correct HTML structure.",
+            ),
+            hr(),
+            h2("Why This Fits the Theme", style="margin:1em 0 0 0;"),
+            p(
+                "At its core, the project is about teaching HTML, but we're doing it with Python, arguably the "
+                "wrong tool for the job. This mismatch captures the spirit of the Code Jam's theme while also "
+                'making for an engaging, "playful" learning experience.',
+                style="margin: 0.5em 0 0.5em 0;",
+            ),
+            p(
+                "It's also a fun exploration of ",
+                b('"Python in the browser"'),
+                ". Everything-tutorial logic, code execution, and validation-is written in Python. The user writes "
+                "Python, the site runs Python, and all of it ultimately produces HTML (Plus CSS and JavaScript).",
+                style="margin: 0.5em 0 1em 0;",
+            ),
+            hr(),
+            custom_code_block(
+                "• @psyklopps42 (Sebastian)",
+                "• @kcatloaf (Granth)",
+                "• @0w3n (Owen)",
+                "• @AMK (Amen Ellah)",
+                "• @kuro (Mohammad)",
+                language="authors",
+                copy_tip="none",
+            ),
+            style="display:flex; flex-direction:column; max-width: 70vw; margin: 2em auto 2em auto;"
+            "background-color:#eeeeee; padding: 2em; border-radius: 1em; "
+            "box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;",
+        ),
     )
 
 
