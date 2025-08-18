@@ -5,7 +5,7 @@ from html_helpers import div
 from pyscript.web import Element
 
 
-def validate_solution(expected: str, actual: Element) -> Element:
+def validate_solution(expected: str, actual: Element) -> tuple[bool, Element]:
     """Validate HTML output against expected template.
 
     The template should be a string containing the expected XML structure and can contain `{{*}}` as a wildcard that
@@ -17,8 +17,8 @@ def validate_solution(expected: str, actual: Element) -> Element:
     actual_tree = ET.fromstring(actual.outerHTML)
     error = _matches_xml_template(expected_tree, actual_tree)
     if error is None:
-        return div("✅ Output matches", style="color:green; font-weight:bold;")
-    return error
+        return True, div("✅ Output matches", style="color:green; font-weight:bold;")
+    return False, error
 
 
 # The following methods return None if there was no error, otherwise an HTML element displaying the error message

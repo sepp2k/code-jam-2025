@@ -51,6 +51,7 @@ class AppStorage:
 
     EXERCISES: list[ExerciseGroup] = load_exercises_from_json(EXERCISES_JSON_FILE)
     current_exercise: Exercise = EXERCISES[0].exercises[0]
+    wrong_submissions: int = 0
 
     def get_current_exercise(self) -> Exercise:
         """Get current exercise that's being worked on."""
@@ -59,6 +60,18 @@ class AppStorage:
     def set_current_exercise_by_index(self, group_index: int, exercise_index: int) -> None:
         """Set current exercise that's being worked on."""
         self.current_exercise = self.EXERCISES[group_index].exercises[exercise_index]
+
+    def increment_wrong_submissions(self) -> None:
+        """Increment the number of wrong submissions."""
+        self.wrong_submissions += 1
+
+    def get_wrong_submissions(self) -> int:
+        """Get the number of wrong submissions."""
+        return self.wrong_submissions
+
+    def reset_wrong_submissions(self) -> None:
+        """Reset the number of wrong submissions."""
+        self.wrong_submissions = 0
 
 
 AppState: AppStorage = AppStorage()
@@ -93,6 +106,26 @@ def _display_result(output_area: Element, result: Element) -> None:
     _update_iframe(output_area, result_html)
 
 
+def _validate_user_input(source: str) -> Element:
+    output = div()
+    environment = {name: value for name, value in html_helpers.__dict__.items() if not name.startswith("_")}
+    tree = ast.parse(source)
+    for statement in tree.body:
+        match statement:
+            case ast.Expr():
+                result = eval(compile(ast.Expression(statement.value), "", mode="eval"), globals=environment)
+                if hasattr(result, "classList") or isinstance(result, str):
+                    output.append(result)
+                else:
+                    err = f"""
+                    Expression returned {result} (of type {type(result)}), instead of an HTML element or string
+                    """.strip()
+                    raise ValueError(err)
+            case ast.FunctionDef() | ast.Assign():
+                exec(compile(ast.Module([statement]), "", mode="exec"), globals=environment)
+    return output
+
+
 def _evaluate_solution(
     source: str = "",
     expected: str = "",
@@ -112,38 +145,30 @@ def _evaluate_solution(
     error_area.innerHTML = ""
     info_area.innerHTML = ""
 
-    is_invalid_html = False
-
     # Attempt to generate HTML
-    output = div()
-    err = None
-    environment = {name: value for name, value in html_helpers.__dict__.items() if not name.startswith("_")}
     try:
-        tree = ast.parse(source)
-        for statement in tree.body:
-            match statement:
-                case ast.Expr():
-                    result = eval(compile(ast.Expression(statement.value), "", mode="eval"), globals=environment)
-                    if hasattr(result, "classList") or isinstance(result, str):
-                        output.append(result)
-                    else:
-                        is_invalid_html = True
-                        err = f"""
-                        Expression returned {result} (of type {type(result)}), instead of an HTML element or string
-                        """.strip()
-                case ast.FunctionDef() | ast.Assign():
-                    exec(compile(ast.Module([statement]), "", mode="exec"), globals=environment)
-    except Exception as e:
-        is_invalid_html = True
-        err = e
-
-    if is_invalid_html:
+        output = _validate_user_input(source)
+    except Exception as err:
         error_area.append(div("The code did not produce valid HTML element.", br(), b("Error"), f": {err!s}"))
         _update_iframe(output_area, "")
         return
 
-    msg = validate_solution(expected, output)
+    correct_solution, msg = validate_solution(expected, output)
+    if not correct_solution:
+        AppState.increment_wrong_submissions()
+    else:
+        AppState.reset_wrong_submissions()
+
+    hints = [
+        li(hint.message)
+        for hint in AppState.get_current_exercise().error_hints
+        if AppState.get_wrong_submissions() >= hint.after_tries
+    ]
+
     info_area.append(msg)
+
+    if hints:
+        info_area.append(div("Hints:", ul(*hints)))
 
     _display_result(output_area, output)
 
