@@ -43,7 +43,6 @@ def h6(*children: Element | str, **attributes: str) -> Element:
     return _tag("h6", *children, **attributes)
 
 
-
 def div(*children: Element | str, **attributes: str) -> Element:
     """Create a div element."""
     return _tag("div", *children, **attributes)
@@ -148,7 +147,7 @@ def summary(*children: Element | str, **attributes: str) -> Element:
     """Create a summary element."""
     return _tag("summary", *children, **attributes)
 
-  
+
 def strong(*children: Element | str, **attributes: str) -> Element:
     """Create a strong element."""
     return _tag("strong", *children, **attributes)
