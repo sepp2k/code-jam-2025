@@ -176,3 +176,20 @@ def td(*children: Element | str, **attributes: str) -> Element:
 def mark(*children: Element | str, **attributes: str) -> Element:
     """Create a mark element."""
     return _tag("mark", *children, **attributes)
+
+
+def header(*children: Element | str, **attributes: str) -> Element:
+    """Create a header element."""
+    return _tag("header", *children, **attributes)
+
+def main(*children: Element | str, **attributes: str) -> Element:
+    """Create a main element."""
+    return _tag("main", *children, **attributes)
+
+def footer(*children: Element | str, **attributes: str) -> Element:
+    """Create a footer element."""
+    return _tag("footer", *children, **attributes)
+
+def aside(*children: Element | str, **attributes: str) -> Element:
+    """Create an aside element."""
+    return _tag("aside", *children, **attributes)
