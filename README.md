@@ -99,17 +99,16 @@ Live Demo: [Coming Soon]
 
 ### Navigation
 
-1. **Home**: Landing page.
-2. **About**: HTML tutorial information.
+1. **Home**: HTML tutorial information.
 3. **Exercises**: Interactive exercises.
 
 ### Available HTML Helper Functions
 
-To pass an exercise, you ned to write Python code that mirrors the requested HTML structure request by the exercise. To do that, you should use the available Python helper functions to create HTML elements. The functions take the form: `html_tag_name(content, *children, **attributes)`.
+To pass an exercise, you need to write Python code that mirrors the HTML structure requested by the exercise. To do that, you should use the available Python helper functions to create HTML elements. The functions take the form: `html_tag_name(content, *children, **attributes)`.
 
-- `content`: is the text content of the tag.
-- `*children`: a list of HTML elements of tags that are appended as children to the current tag.
-- `**attributes`: key-value attributes that are added to the tag.
+- `content`: the text content of the tag
+- `*children`: a list of HTML elements of tags that are appended as children to the current tag
+- `**attributes`: key-value attributes that are added to the tag
 
 #### Examples
 
