@@ -47,6 +47,8 @@ Live Demo: [Coming Soon]
 
 3. Click submit to see the HTML preview, and validation feedback.
 
+4. If you enter a wrong solution multiple times, you will be shown a sequence of helpful hints.
+
 ## Features
 
 - Interactive Code Editor with Python syntax highlighting (powered by CodeMirror).
